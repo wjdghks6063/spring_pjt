@@ -5,8 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import common.Command;
 import dao.Manager_dao;
 
-public class Manager_home implements Command {
-	
+public class Manager_donation implements Command {
+
 	@Override
 	public void execute(HttpServletRequest request) {
 		// TODO Auto-generated method stub
@@ -20,5 +20,4 @@ public class Manager_home implements Command {
 		request.setAttribute("dao", dao);
 		request.setAttribute("list", dao.getSearchList());
 	}
-
 }

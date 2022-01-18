@@ -129,6 +129,20 @@
     color: #00ab33;
     vertical-align: bottom;
 }
+.my_recent_vol_count {
+    display: inline-block;
+    margin: 1px 0 0 10px;
+    font-size: 14px;
+    vertical-align: middle;
+}
+.my_recent_vol_count .number {
+    display: inline-block;
+    margin-left: 4px;
+    font-family: NanumSquareWebFont,dotum,Sans-serif;
+    font-size: 17px;
+    color: #0f92e0;
+    vertical-align: bottom;
+}
 .my_recent_news_guide {
     display: inline-block;
     margin-top: 1px;

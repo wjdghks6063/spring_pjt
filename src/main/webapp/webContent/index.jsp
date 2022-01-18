@@ -31,49 +31,8 @@
 		index.submit();
 	}
 </script>
-<body>
-<div id ="containar">
-<form name="index">
-</form>
-<div id ="warp" class="warp">    
-    <header id="header" class="header-header-1">
-    <div id ="header-main">
-        <div id ="header-top">
-            <h1 class="logo-box">
-                <a href="" class="logo-img"></a>
-            </h1>
-            <!-- 헤드 메뉴 내용 -->
-           <div class ="main-top-menu">
-                <a class="main-text" href="Donation">기부</a>
-                <a class="main-text" href="Volunteer">봉사</a>
-                <a class="main-text" href="#">????</a>
-                <a class="main-text" href="Localnews">지역 뉴스</a>
-                <a class="main-text" href="Missing">실종아동</a>
-            </div>
-            <!-- 로그인 및 검색버튼-->    
-            
-          <div class="main-top-login">
-                <c:choose>
-  			  <c:when test="${not empty session_name && session_level ne 'top'}">
-  			   <a class="login" href="javascript:goMypage('${session_id}')" style="font-size:20px;margin-bottom:5px;">${session_name}님 &nbsp&nbsp</a>
-     			   <a class="login" href ="Logout">로그아웃</a>
-	  		  </c:when>
-	  		  <c:when test="${session_level eq 'top'}">
-					 <a class="login" href="javascript:goDashboard('${session_id}')" style="font-size:20px;margin-bottom:5px;">관리자님&nbsp&nbsp&nbsp</a>
-     			   <a class="login" href ="Logout">로그아웃</a>  		  
-	  		  </c:when>
-		      <c:otherwise>
-		        <a class="login" href ="Login">로그인</a>
-	          </c:otherwise>
-			</c:choose>
-                <span class="longbar"></span> <!--로그인 돋보기 사이 | 막대기 -->
-                <a  class="search-img" href =""><i class="fas fa-search" style="font-size: 22px;"></i></a>
-          </div>
-    
-        </div>
-    </div>
-    </header>
-</div>
+
+ <%@ include file="common_header.jsp" %>
     
     <div class ="mainbanner-box">
         <div class ="mainbanner-background"> <!-- 이미지 색상 교체 박스 -->

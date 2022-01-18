@@ -1,181 +1,200 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-  <%@ include file="../common_header.jsp" %>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <!--페이지 css-->
-    <link href="css/mypage-menu.css" rel="stylesheet">
-    <link href="css/manager-home.css" rel="stylesheet">
-    <!--script 밑에 body와 </div> 있음-->
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> <!-- 배열의 크기를 구하기 위해 넣음 -->
+<%@ include file="../common_header.jsp"%>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--페이지 css-->
+<link href="css/mypage-menu.css" rel="stylesheet">
+<link href="css/manager-home.css" rel="stylesheet">
+<!--script 밑에 body와 </div> 있음-->
 
-<script>
-	
-</script>
-<form name="member">
-	<input type="hidden" name="t_id" value="${session_id}">
-   <body>
-<div id="containar">
-    <div class="my-page-box">
-        <div class="my-list-left">
-            <div class="my-profile">
-                <img src="../홈페이지_기본_레이아웃/img/heart.png" width="72" height="72" alt="유저 프로필 사진" class="my-profile-img" 
-                    style="background-color: white;" id="profileImageArea">
-                <div class="my_profile_nickname">
-                    <span class="ellipsis" id="nickNameArea">${session_name}</span>
-                </div>
-                <div class="my_profile_id" id="maskingIdArea">${session_id}</div>
-            </div>
-            <div id="lnb" class="my_lnb" role="menu">
-                <a href="../홈페이지_기본_레이아웃/manager-home.html" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="true">MY홈</a> 
-                <a href="../홈페이지_기본_레이아웃/manager-donation.html" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">기부</a>
-                <a href="../홈페이지_기본_레이아웃/manager-volunteer.html" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">봉사</a>
-                <a href="../홈페이지_기본_레이아웃/manager-Year-end-settlement.html"role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">회원 관리</a>
-            </div>
-        </div>
-        
-            <!--후원 금액 표시 -->
-        <div role="main" id="content" class="my_content">
-            <div class="my_summary_wrap" id="mySummaryAll">
-                <div class="my_summary_box">
-                    <div class="my_summary_title">
-                        <h3 class="title">오늘의 후원금액</h3>
-                        <span class="number_donation"><span class="big_number" id="myCashTotal"></span> 원</span>
-                    </div>
-                    <c:forEach items="${list}" var="list">
-                    	<a href="" class="my_summary_item">
-                    		<span class="title">${list.getSearch_name()}</span>
-                    		<span class="number_wrap">
-                    			<strong class="number" id="myProject">
-                    				10
-                    			</strong> 원
-                    		</span>
-                    	
-                    	</a>
-                    </c:forEach>
-                    <!--a href="" class="my_summary_item"><span class="title">노인</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 원</span></a> 
-                    <a href="" class="my_summary_item"><span class="title">장애</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 원</span></a> 
-                    <a href="" class="my_summary_item"><span class="title">재난</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 원</span></a-->
-                </div>
-                <div class="my_summary_box">
-                    <div class="my_summary_title">
-                        <h3 class="title">오늘의 봉사 일정</h3>
-                        <span class="number_volunteer"><strong class="big_number" id="mySponTotal">15</strong> 건</span>
-                    </div>
-                        <a href="/my/timeline#type=donation" class="my_summary_item"><span class="title">봉사 게시글 작성</span><span class="number_wrap"><strong class="number" id="myDonation">25</strong> 건</span></a> 
-                        <a href="/my/timeline#type=funding" class="my_summary_item"><span class="title">봉사 참여 인원</span><span class="number_wrap"><strong class="number" id="myFunding">125</strong> 명</span></a>
-                </div>
-            </div>
-        
-
-                <!-- 내 소식 -->
-            <div class="my_recent_news_wrap" id="my_notification">
-                <h3 class="my_recent_news_title">진행중인 기부</h3><span class="my_recent_news_count">총<span class="number" id="my_notification_count">42</span>건</span>
-                <div class="my_recent_news_feed"><!--전체 보기-->
-                    <ol class="list_news" id="my_notification_list">
-                        <!-- 마감일이 가까워지는 순서대로 보여져야 함-->
-                        <li class="item_news type_donation">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    사랑으로 기부해 주세요. (날짜: 2022-01-07 ~ 2022-01-12)
-                                </p>
-                                <span class="text_information">젤리빈즈</span>
-                                <span class="text_information">61% 달성</span>
-                                <button class="button_delete" data-id="61d7a8bc2c5ccf943ae43321">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="item_news type_donation">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    훈훈한 열기를 전달해 주세요. (날짜: 2022-01-01~ 2022-01-17)
-                                </p>
-                                <span class="text_information">사랑의 연탄배달</span>
-                                <span class="text_information">목표금액 달성</span>
-                                <button class="button_delete" data-id="61d7a8bc49c1a162a5e711aa">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="item_news type_donation">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    새해엔 학교가 가고 싶어요. (날짜: 2022-01-07 ~ 2022-01-22)
-                                </p>
-                                <span class="text_information">시골 농아협회</span>
-                                <span class="text_information">12% 달성</span>
-                                <button class="button_delete" data-id="61d7a8b94403a833c495ec99">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                    </ol>
-                </div><a href="../홈페이지_기본_레이아웃/manager-donation.html" class="my_recent_news_link">전체보기 <i class="fas fa-chevron-right"></i></a>
-            </div>
-
-            <!-- 내 소식 -->
-            <div class="my_recent_news_wrap" id="my_notification">
-            <h3 class="my_recent_news_title">오늘의 봉사 일정</h3><span class="my_recent_news_count">총<span class="number" id="my_notification_count">42</span>건</span>
-            <div class="my_recent_news_feed"><!--전체 보기-->
-                <ol class="list_news" id="my_notification_list">
-                    <li class="item_news type_funding">
-                        <div class="card_news">
-                            <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                            <p class="text_content">
-                                노인분들에게 희망을 전달해 주세요. (장소: 중구 태평로 152-12번지 희망노인회관)
-                            </p>
-                            <span class="text_information">하루나리</span>
-                            <span class="text_information">참여인원 : 23 명</span>
-                            <button class="button_delete" data-id="61d7a8bc2c5ccf943ae43321">
-                                <span class="blind">삭제</span>
-                            </button>
-                        </div>
-                    </li>
-                    <li class="item_news type_funding">
-                        <div class="card_news">
-                            <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                            <p class="text_content">
-                                희망 봉사원 새해맞이 청소. (장소 : 유성구 172-21 희망봉사원 2층)
-                            </p>
-                            <span class="text_information">희망 봉사원</span>
-                            <span class="text_information">참여인원 : 12 명</span>
-                            <button class="button_delete" data-id="61d7a8bc49c1a162a5e711aa">
-                                <span class="blind">삭제</span>
-                            </button>
-                        </div>
-                    </li>
-                    <li class="item_news type_funding">
-                        <div class="card_news">
-                            <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                            <p class="text_content">
-                                유등천을 살려주세요. (장소: 중구 태평로 유등천 다리 밑)
-                            </p>
-                            <span class="text_information">워터닥터</span>
-                            <span class="text_information">참여인원 : 32 명</span>
-                            <button class="button_delete" data-id="61d7a8b94403a833c495ec99">
-                                <span class="blind">삭제</span>
-                            </button>
-                        </div>
-                    </li>
-                </ol>
-            </div><a href="../홈페이지_기본_레이아웃/manager-volunteer.html" class="my_recent_news_link">전체보기 <i class="fas fa-chevron-right"></i></a>
-        </div>
-
-        </div><!-- 활동 내용 div-->
-
-
-        </div>
-    </div>
+<form name="goPage">
+	<input type="hidden" name="t_gubun">
 </form>
 
+<script>
+	function goHome(){
+		goPage.t_gubun.value="Home";
+		goPage.method="post";
+		goPage.action="Manager";
+		goPage.submit();
+	}
+	
+	function goDona(){
+		goPage.t_gubun.value="Dona";
+		goPage.method="post";
+		goPage.action="Manager";
+		goPage.submit();
+	}
+</script>
+	
+	<body>
+		<div id="containar">
+			<div class="my-page-box">
+				<div class="my-list-left">
+					<div class="my-profile">
+						<img src="../홈페이지_기본_레이아웃/img/heart.png" width="72" height="72"
+							alt="유저 프로필 사진" class="my-profile-img"
+							style="background-color: white;" id="profileImageArea">
+						<div class="my_profile_nickname">
+							<span class="ellipsis" id="nickNameArea">${session_name}</span>
+						</div>
+						<div class="my_profile_id" id="maskingIdArea">${session_id}</div>
+					</div>
+					 <div id="lnb" class="my_lnb" role="menu">
+		                <a href="javascript:goHome()" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="true">MY홈</a> 
+		                <a href="javascript:goDona()" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">기부</a>
+		                <a href="../홈페이지_기본_레이아웃/manager-volunteer.html" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">봉사</a> 
+		                <a href="../홈페이지_기본_레이아웃/manager-Year-end-settlement.html"role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">회원 관리</a>
+		            </div>
+				</div>
 
-        <script>
-            /*메인 header 따라 오기 */
+				<!--후원 금액 표시 -->
+				<div role="main" id="content" class="my_content">
+					<div class="my_summary_wrap" id="mySummaryAll">
+						<div class="my_summary_box">
+							<div class="my_summary_title">
+								<h3 class="title">오늘의 후원금액</h3>
+								<span class="number_donation"><span class="big_number"
+									id="myCashTotal"></span> 원</span>
+							</div>
+							<c:set var="total_money" value="0"></c:set>
+							<!-- 모든 금액을 더하여 오늘의 후원금액을 표시한다. 기본값을  0으로 둔다.-->
+							<c:forEach items="${list}" var="list">
+								<a href="" class="my_summary_item"> <span class="title">${list.getSearch_name()}</span>
+
+									<span class="number_wrap"> <strong class="number">
+										<fmt:formatNumber value="${list.getItem_money()}" pattern="#,###" /> </strong> 원
+								</span> <c:set var="total_money"
+										value="${total_money + list.getItem_money()}" /> <!-- total_money에 리스트의 값을 더한다-->
+							</c:forEach>
+							</a>
+
+							<!--a href="" class="my_summary_item"><span class="title">노인</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 원</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">장애</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 원</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">재난</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 원</span></a-->
+						</div>
+						<div class="my_summary_box">
+							<div class="my_summary_title">
+								<h3 class="title">오늘의 봉사 일정</h3>
+								<c:forEach items="${vol_list}" var="vol_list">
+									<c:set var="total_vol" value="${vol_list.getEnd_vol()}" />
+									<!-- javascript에 넣기 위해 변수를 선언한다.-->
+									<span class="number_volunteer"><strong
+										class="big_number" id="myVolTotal"></strong> 건</span>
+							</div>
+							<a href="" class="my_summary_item">
+								<span class="title">오늘의 봉사 참여 인원</span>
+								<span class="number_wrap">
+									<strong class="number"><fmt:formatNumber value="${vol_list.getTotal_vol()}" pattern="#,###" /></strong>
+								명</span></a> 
+							<a href="" class="my_summary_item">
+									<span class="title">오늘 작성된 봉사 게시글</span>
+									<span class="number_wrap">
+										<strong class="number"><fmt:formatNumber value="${vol_list.getStart_vol()}" pattern="#,###" /></strong> 건
+									</span>
+							</a>
+							</c:forEach>
+						</div>
+					</div>
+
+					<!-- 내 소식 -->
+					<div class="my_recent_news_wrap" id="my_notification">
+						<c:set var="today_dona" value="${PD_list}"></c:set>
+						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
+						<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
+						<h3 class="my_recent_news_title">진행중인 기부</h3>
+						<span class="my_recent_news_count">총<span class="number"
+							id="my_notification_count">${fn:length(today_dona)}</span>건
+						</span>
+						<div class="my_recent_news_feed">
+							<!--전체 보기-->
+							<ol class="list_news" id="my_notification_list">
+								<!-- 마감일이 가까워지는 순서대로 보여져야 함-->
+								<c:forEach items="${PD_list}" var="pd_list">
+									<li class="item_news type_donation">
+										<div class="card_news">
+											<a href="" class="link"></a>
+											<p class="text_content">${pd_list.getDo_title()} (날짜:
+												${pd_list.getDo_start_date()} ~ ${pd_list.getDo_end_date()})</p>
+											<span class="text_information">${pd_list.getDominator()}</span>
+											<!--진행 상황 표시를 위해  퍼센트 표시 -->
+											<c:set var="gage" value="${pd_list.getDo_total() / pd_list.getDo_goal() *100}" />
+											<!-- gage로 처리하면 99.9647 이런식이라 100%가 적용되지 않기 때문에 gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1))로 반올림 처리한다 -->
+											<c:choose>
+												<c:when test="${gage-(gage%1) >= 100}">
+													<span class="text_information">달성 완료</span>
+												</c:when>
+												<c:otherwise>
+													<span class="text_information">
+													${gage-(gage%1)}% &nbsp달성</span>
+												</c:otherwise>
+											</c:choose>
+											<button class="button_delete"
+												data-id="61d7a8bc2c5ccf943ae43321">
+												<span class="blind">삭제</span>
+											</button>
+										</div>
+									</li>
+								</c:forEach>
+
+							</ol>
+						</div>
+						<a href="../홈페이지_기본_레이아웃/manager-donation.html"
+							class="my_recent_news_link">전체보기 <i
+							class="fas fa-chevron-right"></i></a>
+
+					</div>
+
+					<!-- 내 소식 -->
+					<div class="my_recent_news_wrap" id="my_notification">
+						<c:set var="today_vol" value="${PV_list}"></c:set>
+						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
+						<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
+						<h3 class="my_recent_news_title">오늘의 봉사 일정</h3>
+						<span class="my_recent_vol_count">총<span class="number"
+							id="my_notification_count">${fn:length(today_vol)}</span>건
+						</span>
+						<div class="my_recent_news_feed">
+							<!--전체 보기-->
+							<ol class="list_news" id="my_notification_list">
+								<c:forEach items="${PV_list}" var="pv_list">
+								<li class="item_news type_funding">
+									<div class="card_news">
+										<a href="" class="link"></a>
+										<p class="text_content">${pv_list.getVol_title()} (장소: ${pv_list.getVol_site()})</p>
+										<span class="text_information">${pv_list.getVolname()}</span> 
+										<span class="text_information">참여인원 : ${pv_list.getVol_total()} / ${pv_list.getVol_goal()} 명</span>
+										<span class="text_information">모집기간 : ${pv_list.getVol_start_date()} ~ ${pv_list.getVol_end_date()}</span>
+										<button class="button_delete"
+											data-id="61d7a8bc2c5ccf943ae43321">
+											<span class="blind">삭제</span>
+										</button>
+									</div>
+								</li>
+								</c:forEach>
+							</ol>
+						</div>
+						<a href="../홈페이지_기본_레이아웃/manager-volunteer.html"
+							class="my_recent_news_link">전체보기 <i
+							class="fas fa-chevron-right"></i></a>
+					</div>
+
+				</div>
+				<!-- 활동 내용 div-->
+
+
+			</div>
+		</div>
+
+
+<script>
+            /*메인 header 따라 오기 index.jsp에 넣어둠 
             let header = document.querySelector(".header-header-1");
             let headerHeight = header.offsetHeight;
 
@@ -187,7 +206,7 @@
                     header.classList.remove("is-scroll");
                 }
             };
-            // 
+            */
 
             var kkeys = [],
                 konami = "38,38,40,40,37,39,37,39,66,65";
@@ -201,94 +220,37 @@
 
             /* 후원 금액 숫자 순차적 증가*/
     /* 후원 금액 숫자 순차적 증가*/
-    $({ val : 0 }).animate({ val : 150000 }, { /*val : 0 /시작 숫자 / val : 150000 종료 숫자 */
-        duration: 1500,
+    $({ val : 0 }).animate({ val : ${total_money} }, { /*val : 0 /시작 숫자 / val : 150000 종료 숫자 */
         step: function() {
             var num = numberWithCommas(Math.floor(this.val)); 
-            $(".big_number").text(num);
+            $("#myCashTotal").text(num);
         },
         complete: function() {
             var num = numberWithCommas(Math.floor(this.val));
-            $(".big_number").text(num);
+            $("#myCashTotal").text(num);
         }
     });
-
-        $({ val : 0 }).animate({ val : 1.5 }, { /*소숫점 표시시 사용*/
-        duration: 1000,
+    
+    $({ val : 0 }).animate({ val : ${total_vol} }, { /*val : 0 /시작 숫자 / val : 150000 종료 숫자 */
         step: function() {
-            var num = numberWithCommas(this.val.toFixed(1));
-            $(".count_num2").text(num);
+            var num = numberWithCommas(Math.floor(this.val)); 
+            $("#myVolTotal").text(num);
         },
         complete: function() {
-            var num = numberWithCommas(this.val.toFixed(1));
-            $(".count_num2").text(num);
+            var num = numberWithCommas(Math.floor(this.val));
+            $("#myVolTotal").text(num);
         }
     });
 
+
+    //3번째 자리마다 콤마 찍어줌
     function numberWithCommas(x) { //numberWithCommas 3자리마다 콤마
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+    
         </script>
 
-</div>
 </body>
+
 <!--footer -->
-<footer class="footer-box">
-    <div class="footer-top">
-        <dl class="footer-top-box">
-            <dt class="footer-top-notice"><a href="">공지사항</a></dt>
-            <dd class="foorer-top-notice-text">
-                <a href="">회원 가입시 개인정보 관리 내역에 대해 안내해드립니다.<i class="icon-n"><i class="fab fa-envira"></i></i></a>
-            </dd>
-        </dl>
-        <div class="service-info-box" aria-hidden="false">
-            <dl class="service-info-first-line">
-                <dt class="service-info-first-line-title">해피빈 안내</dt>
-                <dd class="service-info-first-line-item"><a href="">해피빈 소개</a></dd>
-                <dd class="service-info-first-line-item"><a href="">해피빈 현황</a></dd>
-            </dl>
-            <dl class="service-info-first-line">
-                <dt class="service-info-first-line-title">제휴∙단체안내</dt>
-                <dd class="service-info-first-line-item"><a href="">해피로그 가입</a></dd>
-                <dd class="service-info-first-line-item"><a href="">기업제휴 문의</a></dd>
-                <dd class="service-info-first-line-item"><a href="">펀딩 개설 신청</a></dd>
-            </dl>
-        </div>
-    </div>
-
-    <div class="footer-info-box">
-        <div class="footer-info-inner">
-            <ul class="footer-info-list">
-                <li class="footer-info-item"><a href="" target="해피빈 이용약관">해피빈 이용약관</a></li>
-                <li class="footer-info-item"><a href="" target="개인정보처리방침"><strong>개인정보처리방침</strong></a></li>
-                <li class="footer-info-item"><a href="" target="책임의 한계와 법적고지">책임의 한계와 법적고지</a></li>
-                <li class="footer-info-item"><a href="" target="고객센터">고객센터</a></li>
-                <li class="footer-info-item"><a href="" target="공익제보(행정안전부)">공익제보(행정안전부)</a></li>
-            </ul><br>
-            <!--ul 끼리 붙어 있어 줄바꿈이 생기지 않아서 넣어줌-->
-            <ul class="footer-info-list">
-                <li class="footer-info-item">제단법인 굿아이디어</li>
-                <li class="footer-info-item">대표 : 최정우</li>
-                <li class="footer-info-item">사업자 등록번호 :199-40-91928</li>
-                <li class="footer-info-item">통신판매업신고 : 2015-대전충남-1994호</li>
-            </ul><br>
-            <address class="footer-info-address">대전 충남 대덕대로 150 11층 (갈마동,창원빌딩) 대표전화 : 1588-8282</address>
-            <small class="footer-info_notice">
-                재능 기부 및 직접기부의 진행과 리워드 제공의 책임은 해당 프로젝트의 개설자에게 있습니다. 굿아이디어는 해당 프로젝트의 당사자가 아니며, 리워드 제공에 대한 책임을 지지 않습니다.
-            </small>
-            <div class="footer-info-copyright">
-                <a href="" class="footer-info-logo">
-                    <img src="img/company.png" class="company-logo" alt="LOGO">
-                </a> <br>
-                <span class="Copyright">Copyright © G&I Corp. All Rights Reserved.</span>
-            </div>
-        </div>
-    </div>
-
-</footer>
-
-</div>
-</div>
-</div>
-
-</html>
+<%@ include file = "../common_footer.jsp" %>
