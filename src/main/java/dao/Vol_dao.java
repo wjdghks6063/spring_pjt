@@ -198,7 +198,7 @@ public class Vol_dao {
 				"INSERT INTO \r\n" + 
 				"volunteer \r\n" + 
 				"VALUES \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getVoname()+"', '"+dto.getVolunteersite()+"', '"+dto.getStart_date()+"','"+dto.getEnd_date()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getLocal()+"',"+dto.getGoal()+","+dto.getTotal()+",0)";
+				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getVoname()+"', '"+dto.getVolunteersite()+"', '"+dto.getStart_date()+"','"+dto.getEnd_date()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getLocal()+"',"+dto.getGoal()+","+dto.getTotal()+",0,'"+dto.getReg_id()+"',0)";
 	
 		try {
 			con = DBConnection.getConnection();

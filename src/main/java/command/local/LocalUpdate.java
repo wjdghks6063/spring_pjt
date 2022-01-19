@@ -12,6 +12,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import common.Command;
+import common.CommonUtil;
 import dao.Dona_dao;
 import dao.Local_dao;
 import dto.Dona_dto;
@@ -52,7 +53,7 @@ public class LocalUpdate implements Command {
 		String no 			= mpr.getParameter("t_no");
 		String title 		= mpr.getParameter("t_title");
 		String news_name 		= mpr.getParameter("t_news_name");
-		String reg_date 	= mpr.getParameter("t_reg_date");
+		String reg_date 	= CommonUtil.getToday();
 		String content 		= mpr.getParameter("t_content");
 		String attach 		= mpr.getFilesystemName("t_attach");
 		
@@ -78,12 +79,12 @@ public class LocalUpdate implements Command {
 		
 		String search 		= mpr.getParameter("t_search");
 
-		
+		String reg_id 		= mpr.getParameter("t_reg_id");
 		
 		
 		System.out.println(no+"    "+content+"    "+attach+"  "+attach+"  "+search+" "+content);
 		
-		Local_dto dto = new Local_dto(no,title,news_name,reg_date,content,db_save_name,search);
+		Local_dto dto = new Local_dto(no,title,news_name,reg_date,content,db_save_name,search,reg_id);
 		int result = dao.LocalUpdate(dto);
 		
 		if(result==1) {
@@ -94,7 +95,7 @@ public class LocalUpdate implements Command {
 		
 		}
 			request.setAttribute("t_url", "LocalNews");
-		
+			request.setAttribute("t_result", result);
 		
 		
 	}

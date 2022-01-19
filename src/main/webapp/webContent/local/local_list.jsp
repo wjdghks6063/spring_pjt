@@ -65,26 +65,16 @@
 					<h1><i class="fas fa-globe-asia"></i></h1>
 					전체 검색</a></li>
                     
-					<li class=""><a href="javascript:goSearch('north')" >
+					<li class=""><a href="javascript:goSearch('donation')" >
 					
 					<h1><i class="fas fa-child"></i></h1>
-					북구</a></li>
+					기부</a></li>
                     
-					<li class=""><a href="javascript:goSearch('east')">
+					<li class=""><a href="javascript:goSearch('volulteer')">
 					<h1><i class="fas fa-user"></i></h1>
-					동구</a></li>
+					봉사</a></li>
                     
-					<li class=""><a href="javascript:goSearch('west')" >
-					<h1><i class="fab fa-accessible-icon"></i></h1>
-					서구</a></li>
-                    
-					<li class=""><a href="javascript:goSearch('south')">
-					<h1><i class="fas fa-house-damage"></i></h1>
-					남구</a></li>
 					
-					<li class=""><a href="javascript:goSearch('center')">
-					<h1><i class="fas fa-house-damage"></i></h1>
-					중구</a></li>
 		</form>			
 				</ul>
 	</div>
@@ -97,66 +87,58 @@
 		  <!-- table start-->
 			<div class="table-box">
 				<table class="table">
-					<caption>회원정보 - 아이디, 이름, 나이, </caption>
+					<caption></caption>
 					<colgroup>
-						<col width="10%">
-						<col width="10%">
-						<col width="10%">
-						<col width="10%">
-						<col width="10%">
-						<col width="10%">
-						<col width="10%">
+						<col width="25%">
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+						<col width="15%">
+					
 					</colgroup>
 					
 					<thead>
 						<tr>
-							<th scope="col">넘버</th>
-							<th scope="col">상품 이미지</th>
-							<th scope="col">제품 명</th>
-							<th scope="col">제품가격</th>
-							<th scope="col" style="color:#006b80">수량</th>
-							<th scope="col">최종가격</th>
-							<th scope="col">수정</th>
+							<th scope="col">메인 사진</th>
+							<th scope="col">타이틀</th>
+							<th scope="col">뉴스종류</th>
+							<th scope="col">기부/봉사</th>
+							<th scope="col">등록일</th>
+							<th scope="col">조회수</th>
 						</tr>
 					</thead>
 			<form name="storeArr">		
 					<tbody>
-			<? for($k=0;  $k<$count;  $k++){?>
-			<? $row = mysqli_fetch_array($result);?>
-					 
-				<?if($row["hit"]==0){?>
+			<c:forEach items="${t_dtos}" var="dtos">	
+				
 					<tr>
-					 <input type="hidden" name="t_no" value="<?=$row["no"]?>" size="3" >
-					 <input type="hidden" name="n_no" value="<?=$row["nno"]?>" size="3" >
-						<td><a style="font-size:15px;" href="javascript:goNews('<?=$row['no']?>')"><?=$k+1?></a></td>
-					<?if($row["bcount"] > 0 and $row["adate"] == $row["bdate"]){?>	
+					 <input type="hidden" name="t_no" value="${dtos.getNo()}" >
+					 <input type="hidden" name="t_reg_id" value="${dtos.getReg_id()}">
+											
 						<td>
-							<a href="javascript:goNews('<?=$row['no']?>')">
-							<img src="/fileroom/news/<?=$row['attach']?>" alt="뉴스1" style=" width:100%;"></a></td>
-					<?}else if($row["bcount"] == 0 and $row["adate"] == $row["bdate"]){?>
-							<td><a style="font-size:15px;color:red;">재 고 없 음</a></td>
-					<?}else if($row["bcount"] > 0 and $row["adate"] != $row["bdate"]){?>
-						<td><a style="font-size:15px;color:red;">상품정보변경됨</a></td>
-					<?}else if($row["bcount"] == 0 and $row["adate"] != $row["bdate"]){?>
-						<td><a style="font-size:15px;color:red;">재 고 없 음</a></td>
-					<?}?>	
-						<td><input name="t_sname" type="hidden" value="<?=$row['sname']?>">
-                            <span  style="width:100%;height:30px;font-size:15px;"><?=$row['sname']?></span>    
-                            </a></td>	
-										<td>
-						<input type="hidden" name="t_regid" value="<?=$row["regid"]?>">
-						<input name="t_price" type="hidden" value="<?=$row["price"]?>" style="color:#006b80;width:100%;height:30px;font-size:15px; text-align:right;">
-                        <span  style=" width:100%;height:30px;font-size:15px;"><?=$row['price']?></span></a></td>
-																		
-						<td><input name="t_acount" type="number" value="<?=$row["acount"]?>"  onchange="calculation('<?=$row['price']?>','<?=$k?>')"; onKeyUp="calculation('<?=$row['price']?>','<?=$row['acount']?>')";
-                                style="color:#006b80;width:100%;height:30px;font-size:15px; text-align:right;"></a></td>
+							<a href="javascript:goView('${dtos.getNo()}')">
+							<img src="donaimg/local/${dtos.getAttach()}" alt="뉴스1" style=" width:200px;height:100px;"></a></td>
+					
+						<td><a style="font-size:15px;" href="javascript:goView('${dtos.getNo()}')">${dtos.getTitle()}</a></td>
+					
+						<td>
+                            <span  style="width:100%;height:30px;font-size:15px;">${dtos.getNews_name()}</span>    
+                            </td>	
 						
 						<td>
-                            
-                        <input type="text" name="t_total" readonly  value="<?=$row["total"]?>"
-				 	    style="text-align:right;width:200px; height:30px; font-size:20px; !important;">
+							<span  style="width:100%;height:30px;font-size:15px;">${dtos.getSearch()}</span>
+						</td>
+																		
+						<td>
+							<span  style="width:100%;height:30px;font-size:15px;">${dtos.getReg_date()}</span>
+						</td>
+						
+						<td>
+                        	<span  style="width:100%;height:30px;font-size:15px;">${dtos.getHit()}</span>
 					    </td>
-			
+					</tr>    
+			</c:forEach>
 <style>
 	.buttona{
 		width:75px;
@@ -177,26 +159,8 @@
 	}
 
 </style>						
-		<?if($row["bcount"] > 0 and $row["adate"] == $row["bdate"]) {?>		
-						<td>
-						<input type:button class="buttona" style="color:#FFF" onclick="goNewsUpdate('<?=$k?>')"
-						  value="결 제">
-						
-						  <input type:button class="buttonb" style="color:#FFF" onclick="goNewsDelete('<?=$k?>')"
-						  value="거 래 취 소">
-						
-						</td>
-		<?} else if($row["bcount"] == 0 || $row["adate"] != $row["bdate"]) {?>				
-			<td> <input type:button class="buttonb" style="color:#FFF" onclick="goNewsDelete('<?=$k?>')"
-						  value="거 래 취 소">
-
-			</td>
-		<? }?>	
-					 </tr>
-		 <? } else if($row["hit"] >= 1){  ?>
-
-		<? }?>				 
-<? } ?>	
+		
+		
 					</tbody>
 			
 </form>		
@@ -205,12 +169,15 @@
 	</div>
 	
 	<br>
+	<div class="paging" id="paging1">	
 	<%	int total_page 				= (int)request.getAttribute("t_total_page");
 		int current_page 			= (int)request.getAttribute("t_current_page");
 		out.print(CommonUtil.pageListPost(current_page, total_page, 5));
 		%>
+	</div>	
 	<br>
 	<input type="button" onclick="goWriteForm()" value="글 쓰 기" class="btn" style="background-color:#f0f0f0;font-family: 'Dongle';">
+						
 								
 
 

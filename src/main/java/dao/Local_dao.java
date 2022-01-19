@@ -73,7 +73,7 @@ public class Local_dao {
 			String query = 
 			"select "+ 
 			"no, title, news_name, "+
-			"to_char(reg_date,'yyyy-MM-dd'), content, attach, search, hit " +
+			"to_char(reg_date,'yyyy-MM-dd'), content, attach, search, hit, reg_id " +
 			"from localnews " +
 			"where no = '"+no+"'";
 			
@@ -93,7 +93,8 @@ public class Local_dao {
 					String search 		= rs.getString(7);
 					
 					int hit 			= rs.getInt(8);
-					dto = new Local_dto(num,title,news_name,reg_date,content,attach,search,hit);
+					String reg_id 		= rs.getString(9);
+					dto = new Local_dto(num,title,news_name,reg_date,content,attach,search,hit,reg_id);
 				}
 			}catch(SQLException e) {
 				System.out.println("LocalView() 메소드 실패");
@@ -197,7 +198,7 @@ public class Local_dao {
 				"INSERT INTO \r\n" + 
 				"localnews \r\n" + 
 				"VALUES \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getNews_name()+"', '"+dto.getReg_date()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getSearch()+"',0)";
+				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getNews_name()+"', '"+dto.getReg_date()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getSearch()+"',0,'"+dto.getReg_id()+"')";
 	
 		try {
 			con = DBConnection.getConnection();
@@ -216,7 +217,7 @@ public class Local_dao {
 	}
 	
 	//리스트 전체 조회 + 검색기능 + 페이징
-	public ArrayList<Local_dto> LocalList(String search,int start, int end){
+	public ArrayList<Local_dto> LocalList(String search1,int start, int end){
 		ArrayList<Local_dto> dtos = new ArrayList<Local_dto>();
 				/*String query = 
 				"select "+ 
@@ -232,9 +233,9 @@ public class Local_dao {
 				"(\r\n" + 
 				"select \r\n" + 
 				"no, title, news_name, \r\n" + 
-				"to_char(reg_date,'yyyy-MM-dd'), content, attach, search, hit\r\n" + 
+				"to_char(reg_date,'yyyy-MM-dd'), content, attach, search, hit, reg_id\r\n" + 
 				"from localnews\r\n" + 
-				"where search like '%"+search+"%'\r\n" + 
+				"where search like '%"+search1+"%'\r\n" + 
 				"order by no desc" +
 				") a \r\n" + 
 				")\r\n" + 
@@ -253,10 +254,11 @@ public class Local_dao {
 					
 					String content 		= rs.getString(6);
 					String attach 		= rs.getString(7);
-					String search1 		= rs.getString(8);
+					String search 		= rs.getString(8);
 					
 					int hit 			= rs.getInt(9);
-					Local_dto dto = new Local_dto(no,title,news_name,reg_date,content,attach,search,hit);
+					String reg_id 		= rs.getString(10);
+					Local_dto dto = new Local_dto(no,title,news_name,reg_date,content,attach,search,hit,reg_id);
 					dtos.add(dto);
 					
 				}

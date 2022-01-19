@@ -63,10 +63,10 @@ public class LocalWrite implements Command {
 		
 		
 		int hit 			= 0;
-		
+		String reg_id 		= mpr.getParameter("t_reg_id");
 		System.out.println(no+"    "+content+"  "+reg_date+"  "+attach+"  "+attach+"  "+search+" "+content);
 		
-		Local_dto dto = new Local_dto(no,title,news_name,reg_date,content,attach,search,hit);
+		Local_dto dto = new Local_dto(no,title,news_name,reg_date,content,attach,search,hit,reg_id);
 		int result = dao.LocalSave(dto);
 		
 		if(result==1) {
@@ -77,6 +77,7 @@ public class LocalWrite implements Command {
 		
 		}
 			request.setAttribute("t_url", "LocalNews");
+			request.setAttribute("t_result", result);
 		
 	}
 

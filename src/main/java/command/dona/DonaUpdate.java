@@ -95,6 +95,7 @@ public class DonaUpdate implements Command {
 		
 		}
 			request.setAttribute("t_url", "Donation");
+			request.setAttribute("t_result", result);
 
 	}
 	

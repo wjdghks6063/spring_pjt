@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="common_header.jsp" %>        
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -32,7 +33,6 @@
 	}
 </script>
 
- <%@ include file="common_header.jsp" %>
     
     <div class ="mainbanner-box">
         <div class ="mainbanner-background"> <!-- 이미지 색상 교체 박스 -->
@@ -351,19 +351,19 @@
                     </dd>
                 </div>
                 <div class="donation-today-text-small-box">
-                    <dt class="donation-t-msg-box">기부 참여</dt>
+                    <dt class="donation-t-msg-box">기부 금액</dt>
                     <dd class="donation-t-num-box">
-                        <span class="donation-t-money"></span> 명
+                        <span class="donation-t-money"></span> 원
                     </dd>
                 </div>
                 <div class="donation-today-text-small-box">
-                    <dt class="donation-t-msg-box">기부 참여</dt>
+                    <dt class="donation-t-msg-box">봉사 일정</dt>
                     <dd class="donation-t-num-box">
-                        <span class="donation-t-money"></span> 명
+                        <span class="donation-t-money"></span> 개
                     </dd>
                 </div>
                 <div class="donation-today-text-small-box">
-                    <dt class="donation-t-msg-box">기부 참여</dt>
+                    <dt class="donation-t-msg-box">봉사 참여</dt>
                     <dd class="donation-t-num-box">
                         <span class="donation-t-money"></span> 명
                     </dd>
@@ -484,7 +484,7 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    /*메인 header 따라 오기 */
+    /*메인 header 따라 오기 common_header에서 사용하기 때문에 주석처리 함 
     let header = document.querySelector(".header-header-1");
         let headerHeight = header.offsetHeight;
 
@@ -496,7 +496,7 @@
             header.classList.remove("is-scroll");
         }
     };
-// 
+ */
 
 
 

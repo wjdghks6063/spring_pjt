@@ -19,9 +19,7 @@
 <link href="css/header.css" rel="stylesheet"> <!-- header css-->
 <link href="css/sub-header.css" rel="stylesheet"> <!--서브 header css-->
 
-<!-- 임시 서브 헤더-->
 <link href="css/view.css" rel="stylesheet"> <!--서브 header css-->
-
 <link href="css/global.css" rel="stylesheet">
 
 <!-- 서머노트를 위해 추가해야할 부분 -->

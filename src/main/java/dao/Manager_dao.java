@@ -15,13 +15,13 @@ public class Manager_dao {
 	ResultSet rs = null;
 	
 	
-	//진행중인 기부 상황 (기간이 지나지 않은 것만 표시)
+	//진행중인 봉사 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
 			public ArrayList<Manager_dto> getProceedingVol(){
 				ArrayList<Manager_dto> PV_list = new ArrayList<>();
 				String query="select title, voname, volunteersite, to_char(start_date,'yyyy-MM-dd') as start_date,\r\n" + 
 						"        to_char(end_date,'yyyy-MM-dd') as end_date, total, goal from volunteer\r\n" + 
-						"        where start_date <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-						"		and end_date >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+						"		where to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+						"		and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
 						"		ORDER BY end_date asc";
 				try {
 					con = DBConnection.getConnection();
@@ -53,13 +53,13 @@ public class Manager_dao {
 			}
 	
 	
-	//진행중인 기부 상황 (기간이 지나지 않은 것만 표시)
+	//진행중인 기부 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
 		public ArrayList<Manager_dto> getProceedingDona(){
 			ArrayList<Manager_dto> PD_list = new ArrayList<>();
 			String query="select title, dominator, to_char(start_date,'yyyy-MM-dd') as start_date,\r\n" + 
-					"        to_char(end_date,'yyyy-MM-dd') as end_date, total, goal from donation\r\n" + 
-					"        where start_date <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-					"		and end_date >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+					"		to_char(end_date,'yyyy-MM-dd') as end_date, total, goal from donation \r\n" + 
+					"		where to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+					"		and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
 					"		ORDER BY end_date asc";
 			try {
 				con = DBConnection.getConnection();
@@ -125,53 +125,17 @@ public class Manager_dao {
 	}
 	
 	
-	//오늘 기부 목록
-	
-	public ArrayList<Manager_dto> getDonaToday(){
-		ArrayList<Manager_dto> item_list = new ArrayList<>();
-		String query="select a.search_code as search, nvl(b.total_money,0) as item_money\r\n" + 
-				"from dona_category a,\r\n" + 
-				"    (select search, dona_date, sum(amount) AS total_money \r\n" + 
-				"    from mypage_dona_history\r\n" + 
-				"    where dona_date = to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-				"    GROUP BY  search, dona_date) b\r\n" + 
-				"where a.search_code = b.search(+)\r\n" + 
-				"order by a.search_code desc";
-		try {
-			con = DBConnection.getConnection();
-			ps = con.prepareStatement(query);
-			rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				String search = rs.getString("search");
-				int item_money = rs.getInt("item_money");
-				
-				item_list.add(new Manager_dto(search, item_money));
-			}
-		} catch(SQLException e) {
-			e.printStackTrace();
-			System.out.println("\n\n--------------------------------------------");
-			System.out.println("getDonaToday 메소드에서 에러가 발생했습니다.");
-			System.out.println("실행한 qury : "+query);
-			System.out.println("--------------------------------------------\n\n");
-		} finally {
-			DBConnection.closeDB(con, ps, rs);
-		}
-		
-		return item_list;
-	}
-	
-	//기부 목록 리스트 (아동,노인...)
+	//오늘의 기부 목록 (아동,노인 카테고리 포함, 일간 금액 표시)
 	public ArrayList<Manager_dto> getSearchList() {
 		ArrayList<Manager_dto> list = new ArrayList<>();
-		String query="select a.search_name , nvl(b.total_money,0) as item_money \r\n" + 
-				"from dona_category a, \r\n" + 
-				"    (select search, dona_date, sum(amount) AS total_money \r\n" + 
-				"    from mypage_dona_history \r\n" + 
-				"    where dona_date = to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-				"    GROUP BY  search, dona_date) b \r\n" + 
-				"where a.search_code = b.search(+) \r\n" + 
-				"order by a.search_name asc";
+		String query="select a.search_name as search, nvl(b.total_money,0) as item_money\r\n" + 
+					" from dona_category a,\r\n" + 
+					" (select search, to_char(dona_date, 'yyyy-MM-dd'), sum(amount) AS total_money\r\n" + 
+					" from mypage_dona_history\r\n" + 
+					" where to_char(dona_date, 'yyyy-MM-dd') = to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+					" GROUP BY  search, to_char(dona_date, 'yyyy-MM-dd')) b\r\n" + 
+					" where a.search_code = b.search(+)\r\n" + 
+					" order by a.search_name asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);

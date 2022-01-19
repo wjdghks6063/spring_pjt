@@ -2,10 +2,15 @@ package dto;
 
 public class Dona_dto {
 
-	private String no, title, doname, dominator, start_date, end_date, content, attach, search;
-	private int goal, total, hit;
+	private String no, title, doname, dominator, start_date, end_date, content, attach, search,reg_id;
+	private int goal, total, hit,dum;
 	
-	
+	//기부하기용
+	public Dona_dto(String no, int total) {
+		super();
+		this.no = no;
+		this.total = total;
+	}
 	
 	//수정용
 	public Dona_dto(String no,String title, String doname, String dominator, String end_date, String content, String attach,
@@ -22,8 +27,7 @@ public class Dona_dto {
 		this.goal = goal;
 	}
 
-
-	//전체목록 뷰 글쓰기 용
+	//뷰
 	public Dona_dto(String no, String title, String doname, String dominator, String start_date, String end_date,
 			String content, String attach, String search, int goal, int total, int hit) {
 		super();
@@ -40,7 +44,49 @@ public class Dona_dto {
 		this.total = total;
 		this.hit = hit;
 	}
+	
 
+
+	//전체목록  글쓰기 용
+	public Dona_dto(String no, String title, String doname, String dominator, String start_date, String end_date,
+			String content, String attach, String search, int goal, int total, int hit, String reg_id, int dum) {
+		super();
+		this.no = no;
+		this.title = title;
+		this.doname = doname;
+		this.dominator = dominator;
+		this.start_date = start_date;
+		this.end_date = end_date;
+		this.content = content;
+		this.attach = attach;
+		this.search = search;
+		this.goal = goal;
+		this.total = total;
+		this.hit = hit;
+		this.reg_id = reg_id;
+		this.dum = dum;
+		
+		
+	}
+
+
+	
+
+	public String getReg_id() {
+		return reg_id;
+	}
+
+	public void setReg_id(String reg_id) {
+		this.reg_id = reg_id;
+	}
+
+	public int getDum() {
+		return dum;
+	}
+
+	public void setDum(int dum) {
+		this.dum = dum;
+	}
 
 	public String getNo() {
 		return no;

@@ -57,14 +57,14 @@
 				}	
 			}
 		vol.method="post";
-		vol.action="VolUpdate";
+		vol.action="LocalUpdate";
 		vol.submit();
 				
 	}
 	function goList(){
 		list.t_gubun.value="List";
 		list.method="post";
-		list.action="Volunteer";
+		list.action="LocalNews";
 		list.submit();
 				
 	}
@@ -90,7 +90,7 @@
         $.ajax({
             data:form_data,
             type:"POST",
-            url:'VolSummerNoteImgUpload',
+            url:'LocalSummerNoteImgUpload',
             cache:false,
             contentType:false,
             processData:false,
@@ -140,7 +140,7 @@
 					<fieldset>
 							<input type="hidden" name="t_no" value="${t_no}">
 						<input type="hidden" name="t_page">
-						<input type="hidden" name="t_gubun" value="VolUpdate">
+						<input type="hidden" name="t_gubun" value="LocalUpdate">
 						<table class="table">
 							<caption><p style="font-size:30px; margin-bottom:20px;">실천하는 사랑, 따뜻한 사회</p></caption>
 							<colgroup>
@@ -150,24 +150,17 @@
 							</colgroup>
 							
 							<tr>
-								<th><label for="title">제  목</label></th>
+								<th><label for="title">뉴스제목</label></th>
 								<td colspan="2"><input type="text" maxlength='100' name="t_title" id="title" class="title" placeholder="제목을 입력해주세요" style="border:1px solid #333333" value="${t_dto.getTitle()}"></td>
 							</tr>
 							<tr>
-								<th><label for="title">봉사명</label></th>
-								<td colspan="2"><input type="text" maxlength='100' name="t_voname" id="title" class="title" placeholder="봉사 제목을 입력해주세요" style="border:1px solid #333333"  value="${t_dto.getVoname()}"></td>
+								<th><label for="title">신문사이름</label></th>
+								<td colspan="2"><input type="text" maxlength='100' name="t_news_name" id="title" class="title" placeholder="신문사를 입력해주세요" style="border:1px solid #333333"  value="${t_dto.getNews_name()}"></td>
 							</tr>
-							<tr>
-								<th><label for="title">봉사 목표 인원</label></th>
-								<td colspan="2"><input type="number" maxlength='100' name="t_goal" id="title" class="title" placeholder="봉사인원 입력해주세요" style="border:1px solid #333333" value="${t_dto.getGoal()}"></td>
-							</tr>
-							<tr>
-								<th><label for="title">봉사할 장소</label></th>
-								<td colspan="2"><input type="text" maxlength='100' name="t_volunteersite"  id="title" class="title"  placeholder="봉사할 장소를 입력해주세요" style="border:1px solid #333333" value="${t_dto.getVolunteersite()}"></td>
-							</tr>
+							
 							<tr>
 								
-								<th><label for="cont">기부 내용</label></th>
+								<th><label for="cont">뉴스 내용</label></th>
 								
 								<td colspan="2"> 
 								
@@ -176,10 +169,7 @@
 								
 								</td>
 							</tr>
-							<tr>
-								<th><label for="cont">기부 종료 날짜</label></th>
-								<td colspan="2"><input type="date" name="t_end_date" id="title" class="title" style="border:1px solid #333333,width:30px;"  value="${t_dto.getEnd_date()}"></td>
-							</tr>
+							
 	<script type="text/javascript">
 	$(function(){					
 		function readImage(input) {
@@ -218,11 +208,9 @@
 								
 								<th><label for="file">기부 지역</label></th>
 								<td colspan="2">
-									<input type="radio"  name="t_local" value="north" <c:if test="${t_dto.getLocal() eq 'north'}">checked</c:if> class="tser" style="border:1px solid #333333">&nbsp 북구
-									<input type="radio"  name="t_local" value="east" <c:if test="${t_dto.getLocal() eq 'east'}">checked</c:if>  class="tser" style="border:1px solid #333333">&nbsp 동구
-									<input type="radio"  name="t_local" value="west" <c:if test="${t_dto.getLocal() eq 'west'}">checked</c:if>  class="tser" style="border:1px solid #333333">&nbsp 서구
-									<input type="radio"  name="t_local" value="south" <c:if test="${t_dto.getLocal() eq 'south'}">checked</c:if> class="tser" style="border:1px solid #333333">&nbsp 남구
-									<input type="radio"  name="t_local" value="center" <c:if test="${t_dto.getLocal() eq 'center'}">checked</c:if> class="tser" style="border:1px solid #333333">&nbsp 중구
+									<input type="radio"  name="t_search" value="donation" <c:if test="${t_dto.getSearch() eq 'donation'}">checked</c:if> class="tser" style="border:1px solid #333333">&nbsp  기부
+									<input type="radio"  name="t_search" value="volunteer" <c:if test="${t_dto.getSearch() eq 'volunteer'}">checked</c:if>  class="tser" style="border:1px solid #333333">&nbsp 봉사
+									
 								</td>
 								
 							</tr>

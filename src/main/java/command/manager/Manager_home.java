@@ -16,7 +16,6 @@ public class Manager_home implements Command {
 		request.setAttribute("PV_list", dao.getProceedingVol());
 		request.setAttribute("PD_list", dao.getProceedingDona());
 		request.setAttribute("vol_list", dao.getVolToday());
-		request.setAttribute("item_list", dao.getDonaToday());
 		request.setAttribute("dao", dao);
 		request.setAttribute("list", dao.getSearchList());
 	}

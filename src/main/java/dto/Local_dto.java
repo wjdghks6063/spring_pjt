@@ -2,12 +2,12 @@ package dto;
 
 public class Local_dto {
 
-	private String no, title, news_name, reg_date, content, attach, search;
+	private String no, title, news_name, reg_date, content, attach, search,reg_id;
 	private int hit;
 	
 	//수정
 	public Local_dto(String no, String title, String news_name, String reg_date, String content, String attach,
-			String search, int hit) {
+			String search, int hit,String reg_id) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -17,11 +17,12 @@ public class Local_dto {
 		this.attach = attach;
 		this.search = search;
 		this.hit = hit;
+		this.reg_id = reg_id;
 	}
 	//전체
 	
 	public Local_dto(String no, String title, String news_name, String reg_date, String content, String attach,
-			String search) {
+			String search,String reg_id) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -30,7 +31,22 @@ public class Local_dto {
 		this.content = content;
 		this.attach = attach;
 		this.search = search;
+		this.reg_id = reg_id;
 	}
+	
+	
+	public String getReg_id() {
+		return reg_id;
+	}
+
+	public void setReg_id(String reg_id) {
+		this.reg_id = reg_id;
+	}
+
+	public void setAttach(String attach) {
+		this.attach = attach;
+	}
+
 	public String getNo() {
 		return no;
 	}

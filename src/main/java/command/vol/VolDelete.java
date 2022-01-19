@@ -32,6 +32,7 @@ public class VolDelete implements Command {
 		
 		}
 			request.setAttribute("t_url", "Volunteer");
+			request.setAttribute("t_result", result);
 	}
 
 }

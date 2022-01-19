@@ -10,7 +10,7 @@
 	
 		list.t_gubun.value="UpdateForm";
 		list.method="post";
-		list.action="Volunteer";
+		list.action="LocalNews";
 		list.submit();
 }
 //삭제
@@ -18,7 +18,7 @@
 	if(confirm("정말 지우시겠습니까?")){
 		
 		list.method="post";
-		list.action="VolDelte";
+		list.action="LocalDelte";
 		list.submit();
 }}
 
@@ -26,7 +26,7 @@
 	function goList(){
 		list.t_gubun.value="List";
 		list.method="post";
-		list.action="Volunteer";
+		list.action="LocalNews";
 		list.submit();
 				
 	}
@@ -52,56 +52,12 @@
 		<div class="board-view ty-2">
 			<div class="board-title">
 				<h2 class="title" data-addtitle="this">${t_dto.getTitle()}</h2>
-				<p class="title-sub">${t_dto.getVoname()}</span> | ${t_dto.getVolunteersite()} | <i class="fa fa-eye"></i>&nbsp ${t_dto.getHit()}</p>
-				<span class="date">${t_dto.getStart_date()} ~ ${t_dto.getEnd_date()}</span>
+				<p class="title-sub">${t_dto.getNews_name()}</span> | <i class="fa fa-eye"></i>&nbsp ${t_dto.getHit()}</p>
+				<span class="date">${t_dto.getReg_date()}</span>
 			</div>
 
 			<div class="board-side" data-grid="{&quot;case&quot;:&quot;pin&quot;, &quot;in&quot;:&quot;.board-view&quot;, &quot;except&quot;:&quot;.header-in&quot;}">
 				<div class="inner">
-
-					<!-- 일시/정기기부 -->
-					
-						<div class="total">
-						<c:set var="gage" value="${t_dto.getTotal() / t_dto.getGoal() *100}"/>
-							<span class="value"><strong class="num"><fmt:formatNumber  pattern="###" value="${gage}"/></strong> %</span>
-							<span class="progress-3 ir-b i-progress-3"><span class="fill ir-b i-progress-3-fill" style="height:${gage}%;"></span></span>
-						</div>
-						<dl class="text" id="text2">
-							<dt><span class="ir-b i-num-give-2"></span>GIVE</dt>
-							<dd><em class="num"> <fmt:formatNumber  pattern="###,###,###,###" value="${t_dto.getTotal()}"/> </em> 명</dd>
-							<dt><span class="ir-b i-num-person-2"></span>SUPPORTERS</dt>
-							<dd>
-								<em class="num">내역서있어야함</em> 명
-							</dd>
-							<dt><span class="ir-b i-num-goal"></span>GOAL</dt>
-							<dd><em class="num"><fmt:formatNumber  pattern="###,###,###,###" value="${t_dto.getGoal()}"/></em> 명</dd>
-						</dl>
-
-                        
-					
-					<!-- 결연 후원 신청 -->
-					
-					
-					<div class="control">
-						<!-- 공유하기 // -->
-                        
-                        <div data-dropdown="" class="share">
-                            <button type="button" data-act="title" class="btn-share" id="btn-share"><span class="ir i-share">공유</span></button>
-                            <div class="share-open" id="share-open show">
-                                <div data-act="cont" id="share-cont" class="share-cont" tabindex="-1">
-                                    <span class="share-in">
-                                        <a href="javascript:;" onclick="" class="item" data-seq="613" data-img-url="" data-share="facebook" data-cate="hope"><span class="ir-b i-facebook-2"></span><span class="in">페이스북</span></a>
-                                        <a href="javascript:;" onclick="" class="item" data-seq="613" data-img-url="" data-share="twitter" data-cate="hope"><span class="ir-b ir-b i-twitter-2"></span><span class="in">트위터</span></a>
-                                        <a href="javascript:;" onclick="" class="item"><span class="ir-b i-kakao"></span><span class="in">카카오톡</span></a>
-                                        <button type="button" class="copy" onclick="clip(); return false;" title="https://www.smilegatefoundation.org/" data-seq="613" data-img-url="" data-share="url" id="sns_url" data-cate="hope"><span class="in-btn">URL 복사</span></button>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-					
-								<button type="button" class="btn-act" onclick="">지금 기부하기</button>
-						
-					</div>
 					
 					
 				</div>

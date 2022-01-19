@@ -1,9 +1,9 @@
 package com.team.pjt;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import command.local.LocalDelete;
@@ -15,6 +15,7 @@ import common.Command;
 import common.CommonSummerNote;
 import common.CommonUtil;
 
+@Controller
 public class LocalController {
 
 	//기부 삭제

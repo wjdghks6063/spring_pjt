@@ -51,7 +51,7 @@ public class DonaWrite implements Command {
 		String title 		= mpr.getParameter("t_title");
 		String doname 		= mpr.getParameter("t_doname");
 		String dominator 	= mpr.getParameter("t_dominator");
-		String start_date 	= CommonUtil.getToday();
+		String start_date 	= CommonUtil.getTodayTime();
 		String end_date 	= mpr.getParameter("t_enddate");
 		String content 		= mpr.getParameter("t_content");
 		String attach 		= mpr.getFilesystemName("t_attach");
@@ -62,10 +62,11 @@ public class DonaWrite implements Command {
 		
 		int total 			= 0;
 		int hit 			= 0;
-		
+		String reg_id 		= mpr.getParameter("t_reg_id");
+		int dum	 			= 0;
 		System.out.println(no+"  "+goal+"  "+content+"  "+start_date+"  "+attach+"  "+attach+"  "+search+" "+content);
 		
-		Dona_dto dto = new Dona_dto(no,title,doname,dominator,start_date,end_date,content,attach,search,goal,total,hit);
+		Dona_dto dto = new Dona_dto(no,title,doname,dominator,start_date,end_date,content,attach,search,goal,total,hit,reg_id,dum);
 		int result = dao.donaSave(dto);
 		
 		if(result==1) {
@@ -76,6 +77,7 @@ public class DonaWrite implements Command {
 		
 		}
 			request.setAttribute("t_url", "Donation");
+			request.setAttribute("t_result", result);
 
 	}
 		

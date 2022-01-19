@@ -43,21 +43,18 @@
 	<input type="hidden" name="t_search" value="${t_search }">
 
 </form>
-	<div class="sub-header sub-header-give">
-		<h1 class="sub-title"><span class="text">기 부</span></h1>
-		<span class="deco-box"><i class="deco-1"></i><i class="deco-2"></i></span>
-	</div>
+<div class="tab-3" data-swipe='{"type":"case1","start":".active"}'>
+			<ul>
+				<li data-act='tab' class="item"><a href="Donation"><span class="in">기부</span></a></li>
+				<li data-act='tab' class="item active"><a href="Volunteer"><span class="in">봉사</span></a></li>
+				<li data-act='tab' class="item"><a href="LocalNews"><span class="in">지역뉴스</span></a></li>
+				<li data-act='tab' class="item"><a href="Missing"><span class="in">실종아동</span></a></li>
+			</ul>
+		</div>
 	
 <!-- 서브 페이지-->	
-<div class="content">
-	<div class="tab-3" data-swipe='{"type":"case1","start":".active"}'>
-		<ul>
-			<li data-act='tab' class="item"><a href="Donation"><span class="in">기부</span></a></li>
-			<li data-act='tab' class="item active"><a href="Volunteer"><span class="in">봉사</span></a></li>
-			<li data-act='tab' class="item"><a href="LocalNews"><span class="in">지역뉴스</span></a></li>
-			<li data-act='tab' class="item"><a href="Missing"><span class="in">실종아동</span></a></li>
-		</ul>
-	</div>
+<div class="sub-main">
+	
 	<div class="sub-search">
 	<h3 class="donation-text-box"><a href="" class="donation-text">100% 전하는 기부 <i class="fas fa-chevron-right"></i></a>
 		<br>
@@ -141,13 +138,15 @@
 	</div>
 	
 	<br>
+<div class="paging" id="paging1">	
 	<%	int total_page 				= (int)request.getAttribute("t_total_page");
 		int current_page 			= (int)request.getAttribute("t_current_page");
 		out.print(CommonUtil.pageListPost(current_page, total_page, 5));
 		%>
+</div>			
 	<br>
 	<input type="button" onclick="goWriteForm()" value="글 쓰 기" class="btn" style="background-color:#f0f0f0;font-family: 'Dongle';">
-								
+							
 
 
 

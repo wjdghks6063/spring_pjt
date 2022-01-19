@@ -30,7 +30,7 @@ public class VolList implements Command {
 				int current_page = 0; //현재 페이지번호
 				
 				String gulsu = request.getParameter("t_list_setup_count"); 		
-				if(gulsu == null){ gulsu="7";}
+				if(gulsu == null){ gulsu="8";}
 				int list_setup_count = Integer.parseInt(gulsu); //몇개씩 조회해 올것인가?
 						
 				int total_count = dao.getTotalCount(search); //전체 행수, 전체 게시글의 수

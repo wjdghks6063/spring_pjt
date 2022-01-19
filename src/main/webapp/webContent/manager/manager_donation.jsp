@@ -77,12 +77,11 @@
             <div class="my_summary_wrap" id="mySummaryAll">
                 <div class="my_summary_box">
                     <div class="my_summary_title">
-                        <h3 class="title">오늘의 기부 일정</h3>
+                        <h3 class="title">오늘의 기부 마감</h3>
                         <span class="number_wrap"><span class="number" id="myCashTotal">0</span> 건</span>
                     </div>
-                    <a href="" class="my_summary_item"><span class="title">진행 중</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a>
-                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
-                    <a href="" class="my_summary_item"><span class="title">마감</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a>
+                    <a href="" class="my_summary_item"><span class="title">달성 미달</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
                 </div>
                 <div class="my_summary_box">
                     <div class="my_summary_title">
@@ -105,7 +104,6 @@
             </div>
         
                 <!-- 진행중 기부 -->
-            <!-- 내 소식 -->
 					<div class="my_recent_news_wrap" id="my_notification">
 						<c:set var="today_dona" value="${PD_list}"></c:set>
 						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
@@ -129,12 +127,14 @@
 											<c:set var="gage" value="${pd_list.getDo_total() / pd_list.getDo_goal() *100}" />
 											<!-- gage로 처리하면 99.9647 이런식이라 100%가 적용되지 않기 때문에 gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1))로 반올림 처리한다 -->
 											<c:choose>
-												<c:when test="${gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1)) >= 100}">
+												<c:when test="${gage-(gage%1) >= 100}">
 													<span class="text_information">달성 완료</span>
 												</c:when>
 												<c:otherwise>
 													<span class="text_information">
-													<fmt:formatNumber pattern="###" value="${gage}"/>% &nbsp달성</span>
+													<fmt:parseNumber var="gage1" value="${gage}" integerOnly="true" />
+													<!-- gage의 값을 var=gage1 로 선언한다. gage1의 소숫점을버리고 출력한다. 사용하기위해선 taglib으로 jstl을 선언해야함 -->
+													${gage1}% &nbsp달성</span>
 												</c:otherwise>
 											</c:choose>
 											<button class="button_delete"
@@ -147,7 +147,7 @@
 
 							</ol>
 						</div>
-						<a href="javascript:goDona()"
+						<a href="../홈페이지_기본_레이아웃/manager-donation.html"
 							class="my_recent_news_link">전체보기 <i
 							class="fas fa-chevron-right"></i></a>
 

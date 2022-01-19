@@ -32,6 +32,7 @@ public class LocalDelete implements Command {
 		
 		}
 			request.setAttribute("t_url", "LocalNews");
+			request.setAttribute("t_result", result);
 	}
 
 }

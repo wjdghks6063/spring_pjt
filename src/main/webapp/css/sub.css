@@ -1,15 +1,38 @@
 @charset "utf-8";
 
 
+.donation-parameter-blue{
+    display: inline-block;
+    height: 100%;
+    background-color: #00BFFF;
+    text-align: right;
+    vertical-align: top;
+}
+
+.donation-parameter-num2{
+    display: inline-block;
+    margin-top: 11px;
+    font-size: 14px;
+    letter-spacing: -.2px;
+    color:#00BFFF;
+}
+
+
 /* 서브 css 위는 베이스와 같다.-----------------------------------------------------------------------------*/
 .sub-main {
 	margin: -52px auto 0;
 	padding-top:75px;
 	width:1140px;
 	
+	/*background-color:#c0c0c0;*/
 
 }
-
+.sub-menu {
+	width:1140px;
+	height:100px;
+	/*background-color:#617161;*/
+	
+}
 .sub-menu ul {
 	width: 95%;
     margin: 0 auto;
@@ -17,7 +40,16 @@
 	background-color:#fff;
 }
 .sub-menu li {
+	float: left;
+    width: 20%;
+    padding: 0 2%;
+    font-size: 30px;
+    line-height: 1.4;
+    color: #fff;
+    text-align: center;
+    list-style: none;
 	
+	background-color:#fdc446;
 }
 
 .sub-search {

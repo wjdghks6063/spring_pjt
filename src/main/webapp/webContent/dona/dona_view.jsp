@@ -30,30 +30,29 @@
 		list.submit();
 				
 	}
+//기부하기 버튼
+		function goDona(){
+		list.t_gubun.value="Dona";
+		list.method="post";
+		list.action="Donation";
+		list.submit();
+				
+	}
 
 
 
 </script>
 <form name="list">
 	<input type="hidden" name="t_no" value="${t_no}">
-	<input type="hidden" name="t_gubun">
-
+	<input type="hidden" name="t_gubun" >
+	<input type="hidden" name="t_total" value="${t_total}">
+	<input type="hidden" name="t_session_id" >
+	<input type="hidden" name="t_dum" >
+	<input type="hidden" name="t_search" value="${t_search}">
+	
+	
 </form>
-	<!--서브 헤더 -->
-	<div class="sub-header sub-header-give">
-		<h1 class="sub-title"><span class="text">기 부</span></h1>
-		<span class="deco-box"><i class="deco-1"></i><i class="deco-2"></i></span>
 
-		<div class="sub-menu">
-			<div class="menu-in">
-				<div class="menu-form">
-					<li class="home"><a href="/" class="home-in"><span class="pos i-home">홈</span></a></li>
-					<li class="dep" data-dropdown=''><button type="button" data-act='title' data-addtitle="this">기부</button></li>
-					<li class="dep" data-dropdown=''><button type="button" data-act='title' data-addtitle="this">상세보기</button></li>
-				</div>
-			</div>
-		</div>
-	</div>
 <div class="tab-3" data-swipe='{"type":"case1","start":".active"}'>
 			<ul>
 				<li data-act='tab' class="item active"><a href="Donation"><span class="in">기부</span></a></li>
@@ -77,7 +76,7 @@
 					
 						<div class="total">
 						<c:set var="gage" value="${t_dto.getTotal() / t_dto.getGoal() *100}"/>
-							<span class="value"><strong class="num">${gage}</strong> %</span>
+							<span class="value"><strong class="num"><fmt:formatNumber  pattern="###" value="${gage}" /></strong> %</span>
 							<span class="progress-3 ir-b i-progress-3"><span class="fill ir-b i-progress-3-fill" style="height:${gage}%;"></span></span>
 						</div>
 						<dl class="text" id="text2">
@@ -113,7 +112,7 @@
                             </div>
                         </div>
 					
-								<button type="button" class="btn-act" onclick="">지금 기부하기</button>
+								<button type="button" class="btn-act" onclick="goDona()">지금 기부하기</button>
 						
 					</div>
 					

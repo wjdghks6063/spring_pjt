@@ -132,7 +132,9 @@
 												</c:when>
 												<c:otherwise>
 													<span class="text_information">
-													${gage-(gage%1)}% &nbsp달성</span>
+													<fmt:parseNumber var="gage1" value="${gage}" integerOnly="true" />
+													<!-- gage의 값을 var=gage1 로 선언한다. gage1의 소숫점을버리고 출력한다. 사용하기위해선 taglib으로 jstl을 선언해야함 -->
+													${gage1}% &nbsp달성</span>
 												</c:otherwise>
 											</c:choose>
 											<button class="button_delete"
@@ -156,7 +158,7 @@
 						<c:set var="today_vol" value="${PV_list}"></c:set>
 						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
 						<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
-						<h3 class="my_recent_news_title">오늘의 봉사 일정</h3>
+						<h3 class="my_recent_news_title">진행중인 봉사 일정</h3>
 						<span class="my_recent_vol_count">총<span class="number"
 							id="my_notification_count">${fn:length(today_vol)}</span>건
 						</span>

@@ -66,7 +66,7 @@ public static String getFile_dir_notice1() {
 		return today;
 	}
 	
-	public static String getToday2(){
+	public static String getTodayTime(){
 //		LocalDate currentDate = LocalDate.now();
 		Date time = new Date();
 		
@@ -146,7 +146,7 @@ public static String getFile_dir_notice1() {
 		//첫번째 페이지 인덱스 화면이 아닌경우
 		if(current_page > pagenumber){
 			curpage = startpage -1;  //시작페이지 번호보다 1적은 페이지로 이동
-			strList = strList +"<a href=javascript:goPage('"+curpage+"') ><i class='fa fa-angle-double-left'></i></a>";
+			strList = strList +"<a class='pag-prev' href=javascript:goPage('"+curpage+"') ></a>";
 		}
 						
 		//시작페이지 번호부터 마지막 페이지 번호까지 화면에 표시
@@ -162,7 +162,7 @@ public static String getFile_dir_notice1() {
 		//뒤에 페이지가 더 있는 경우
 		if(totalpage > endpage){
 			curpage = endpage+1;
-			strList = strList + "<a href=javascript:goPage('"+curpage+"') ><i class='fa fa-angle-double-right'></i></a>";
+			strList = strList + "<a class='pag-next' href=javascript:goPage('"+curpage+"') ></a>";
 		}
 		return strList;
 	}	

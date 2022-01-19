@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<link href="css/paging.css" rel="stylesheet"> <!--파트너 css-->
 	<!--##### // Visual & LNB #####-->
 <%@ include file = "../common_header.jsp" %>
 <script type="text/javascript">
@@ -43,21 +43,6 @@
 	<input type="hidden" name="t_search" value="${t_search }">
 
 </form>
-	<!--서브 헤더 -->
-	<div class="sub-header sub-header-give">
-		<h1 class="sub-title"><span class="text">기 부</span></h1>
-		<span class="deco-box"><i class="deco-1"></i><i class="deco-2"></i></span>
-
-		<div class="sub-menu">
-			<div class="menu-in">
-				<div class="menu-form">
-					<li class="home"><a href="/" class="home-in"><span class="pos i-home">홈</span></a></li>
-					<li class="dep" data-dropdown=''><button type="button" data-act='title' data-addtitle="this">기부</button></li>
-					<li class="dep" data-dropdown=''><button type="button" data-act='title' data-addtitle="this">목록</button></li>
-				</div>
-			</div>
-		</div>
-	</div>
 <div class="tab-3" data-swipe='{"type":"case1","start":".active"}'>
 			<ul>
 				<li data-act='tab' class="item active"><a href="Donation"><span class="in">기부</span></a></li>
@@ -134,12 +119,22 @@
                             <div class="donation-comp">${dtos.getDominator()}</div>
                             <div class="donation-parameter-bar">
                           	 <c:set var="gage" value="${dtos.getTotal() / dtos.getGoal() *100}"/>
-                          	 
-                                <span class="donation-parameter-green" style="width:${gage}%;" max="100%"></span> <!--width 값 변화에 따라 게이지 량 변경-->
-                            </div>
-                            <strong class="donation-parameter-num"><fmt:formatNumber  pattern="###" value="${gage}" />% </strong>
+                          		<c:choose>
+                          			<c:when test="${gage < 100 }"> 
+                                		<span class="donation-parameter-green" style="width:<fmt:formatNumber  pattern="###" value="${gage}" />%;" max="100%"></span> <!--width 값 변화에 따라 게이지 량 변경-->
+                           				<strong class="donation-parameter-num"><fmt:formatNumber  pattern="###" value="${gage}" />% </strong>
                             <strong class="donation-parameter-money"><span style="color:#10c838;font-size:15px;">₩ <fmt:formatNumber  pattern="###,###,###,###" value="${dtos.getTotal()}"/></span>
-                            /<span style="color:#c0c0c0;font-size:15px;">₩ <fmt:formatNumber  pattern="###,###,###,###" value="${dtos.getGoal()}"/></span></strong>
+                            /<span style="color:#c0c0c0;font-size:14px;">₩ <fmt:formatNumber  pattern="###,###,###,###" value="${dtos.getGoal()}"/></span></strong>
+                           			</c:when>
+                           			<c:when test="${gage >= 100 }"> 
+                                		<span class="donation-parameter-blue" style="width:100%;" max="100%";></span> <!--width 값 변화에 따라 게이지 량 변경-->
+                           				<strong class="donation-parameter-num2"><fmt:formatNumber  pattern="###" value="${gage}" />% </strong>
+                            <strong class="donation-parameter-money"><span style="color: #00BFFF;font-size:15px;">₩ <fmt:formatNumber  pattern="###,###,###,###" value="${dtos.getTotal()}"/></span>
+                            /<span style="color:#c0c0c0;font-size:14px;">₩ <fmt:formatNumber  pattern="###,###,###,###" value="${dtos.getGoal()}"/></span></strong>
+                           			</c:when>
+                           		</c:choose>	
+                            </div>
+                            
                         </div>    
                     </a>
                 </li>
@@ -149,10 +144,27 @@
 	</div>
 	
 	<br>
+	<div class="paging" id="paging1">
 	<%	int total_page 				= (int)request.getAttribute("t_total_page");
 		int current_page 			= (int)request.getAttribute("t_current_page");
 		out.print(CommonUtil.pageListPost(current_page, total_page, 5));
 		%>
+		
+		<div class="paging" id="paging1">
+    <a class="pag-first" href=""><span class="blind">first</span></a> 
+    <a class="pag-prev" href=""><span class="blind">prev</span></a>
+        <span class="num" data-total="9"> <span class="active" title="현재페이지">1</span> 
+            <a href="">2</a>  
+            <a href="">3</a>  
+            <a href="">4</a>  
+            <a href="">5</a>
+            <a href="">6</a>
+            <a href="">7</a> 
+        </span>
+    <a class="pag-next" href=""><span class="blind">next</span></a> 
+    <a class="pag-last" href=""><span class="blind">last</span></a>
+</div>
+	</div>	
 	<br>
 	<input type="button" onclick="goWriteForm()" value="글 쓰 기" class="btn" style="background-color:#f0f0f0;font-family: 'Dongle';">
 								

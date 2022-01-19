@@ -17,6 +17,29 @@ public class Dona_dao {
 	ResultSet rs 			= null;
 
 
+	//기부하기 버튼
+	
+		public int Dona(Dona_dto dto) {
+			int result = 0;
+			String query = 
+					"UPDATE donation\r\n" + 
+					"SET \r\n" + 
+					
+					"total 							= "+dto.getTotal()+"\r\n" + 
+					"where no 						= '"+dto.getNo()+"'";
+			try {
+				con 	= DBConnection.getConnection();
+				ps 		= con.prepareStatement(query);
+				result 	= ps.executeUpdate();
+			}catch(SQLException e) {
+				System.out.println("Dona() 메소드 실패");
+				System.out.println("query : "+query);
+				e.printStackTrace();
+			}finally {
+				DBConnection.closeDB(con, ps, rs);
+			}return result;
+		}
+	
 	//기부 데이터 삭제
 	public int DonaDelete(String no){
 		int result = 0;
@@ -197,7 +220,7 @@ public class Dona_dao {
 				"INSERT INTO \r\n" + 
 				"donation \r\n" + 
 				"VALUES \r\n" + 
-				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getDoname()+"', '"+dto.getDominator()+"', '"+dto.getStart_date()+"','"+dto.getEnd_date()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getSearch()+"',"+dto.getGoal()+","+dto.getTotal()+",0)";
+				"('"+dto.getNo()+"','"+dto.getTitle()+"','"+dto.getDoname()+"', '"+dto.getDominator()+"', '"+dto.getStart_date()+"','"+dto.getEnd_date()+"','"+dto.getContent()+"','"+dto.getAttach()+"','"+dto.getSearch()+"',"+dto.getGoal()+","+dto.getTotal()+",0,'"+dto.getReg_id()+"',0)";
 	
 		try {
 			con = DBConnection.getConnection();
@@ -232,7 +255,7 @@ public class Dona_dao {
 				"(\r\n" + 
 				"select \r\n" + 
 				"no, title, doname,dominator, \r\n" + 
-				"to_char(start_date,'yyyy-MM-dd'), to_char(end_date,'yyyy-MM-dd'), content, attach, search,goal,total,hit\r\n" + 
+				"to_char(start_date,'yyyy-MM-dd'), to_char(end_date,'yyyy-MM-dd'), content, attach, search,goal,total,hit,reg_id,dum\r\n" + 
 				"from donation\r\n" + 
 				"where search like '%"+search+"%'\r\n" + 
 				"order by no desc" +
@@ -257,7 +280,9 @@ public class Dona_dao {
 					int goal 			= rs.getInt(11);
 					int total 			= rs.getInt(12);
 					int hit 			= rs.getInt(13);
-					Dona_dto dto = new Dona_dto(no,title,doname,dominator,start_date,end_date,content,attach,search,goal,total,hit);
+					String reg_id 		= rs.getString(14);
+					int dum				= rs.getInt(15);
+					Dona_dto dto = new Dona_dto(no,title,doname,dominator,start_date,end_date,content,attach,search,goal,total,hit,reg_id,dum);
 					dtos.add(dto);
 					
 				}

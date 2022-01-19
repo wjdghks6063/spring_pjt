@@ -107,7 +107,7 @@
 */
 //                $(el).summernote('editor.insertImage',"/img/news_summernote/"+$.trim(url));
               //  $(el).summernote('editor.insertImage',"/donaimg/dona_summernote/"+$.trim(url));
-                $(el).summernote('editor.insertImage',"/donaimg/Local_summernote/"+$.trim(url));
+                $(el).summernote('editor.insertImage',"/donaimg/local_summernote/"+$.trim(url));
             },
             error: function(data) {
                 console.log(data);
@@ -149,34 +149,24 @@
 							</colgroup>
 							
 							<tr>
-								<th><label for="title">제목</label></th>
+								<th><label for="title">뉴스제목</label></th>
 								<td colspan="2"><input type="text" maxlength='100' name="t_title" id="title" class="title" placeholder="제목을 입력해주세요" style="border:1px solid #333333"></td>
 							</tr>
 							<tr>
-								<th><label for="title">봉사명</label></th>
+								<th><label for="title">신문사이름</label></th>
 								<td colspan="2"><input type="text" maxlength='100' name="t_news_name" id="title" class="title" placeholder="뉴스 제목을 입력해주세요" style="border:1px solid #333333"></td>
 							</tr>
-							<tr>
-								<th><label for="title">봉사목표인원</label></th>
-								<td colspan="2"><input type="number" maxlength='100' name="t_goal" id="title" class="title" placeholder="필요한 인원을 입력해주세요" style="border:1px solid #333333"></td>
-							</tr>
-							<tr>
-								<th><label for="title">봉사할 장소</label></th>
-								<td colspan="2"><input type="text" maxlength='100' name="t_volunteersite"  id="title" class="title"  placeholder="봉사장소를 입력해주세요" style="border:1px solid #333333"></td>
-							</tr>
+							
 							<tr>
 								
-								<th><label for="cont">봉사 내용</label></th>
+								<th><label for="cont">뉴스 내용</label></th>
 								
 								<td colspan="2">
 									<input type="hidden" name="t_content"> 
 									<div id="summernote"></div>
 								</td>
 							</tr>
-							<tr>
-								<th><label for="cont">봉사모집 종료 날짜</label></th>
-								<td colspan="2"><input type="date" name="t_reg_date" id="title" class="title" style="border:1px solid #333333,width:30px;"></td>
-							</tr>
+							
 	<script type="text/javascript">
 	$(function(){					
 		function readImage(input) {
@@ -213,14 +203,11 @@
 	</style>
 							<tr>
 								
-								<th><label for="file">봉사지역</label></th>
+								<th><label for="file">뉴스종류</label></th>
 								<td colspan="2">
-									<input type="radio"  name="t_local" value="north"  class="tser" style="border:1px solid #333333">&nbsp 북구
-									<input type="radio"  name="t_local" value="east"  class="tser" style="border:1px solid #333333">&nbsp 동구
-									<input type="radio"  name="t_local" value="west"  class="tser" style="border:1px solid #333333">&nbsp 서구
-									<input type="radio"  name="t_local" value="south"  class="tser" style="border:1px solid #333333">&nbsp 남구
-									<input type="radio"  name="t_local" value="center"  class="tser" style="border:1px solid #333333">&nbsp 중구
-								
+									<input type="radio"  name="t_search" value="donation"  class="tser" style="border:1px solid #333333;">&nbsp 봉사
+									<input type="radio"  name="t_search" value="volunteer"  class="tser" style="border:1px solid #333333;">&nbsp 기부
+									
 								</td>
 								
 							</tr>
