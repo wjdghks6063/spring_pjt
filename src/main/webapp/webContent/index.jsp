@@ -7,14 +7,8 @@
 <head>
 <meta charset="utf-8" />
 <title>homepage</title>
-<link rel="stylesheet" type="text/css" href="css/reset.css" />
-<link rel="stylesheet" type="text/css" href="css/base.css" />
-<script type="text/javascript" src="js/jquery-1.8.1.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
 
-<link href="css/header.css" rel="stylesheet"> <!-- header css-->
 <link href="css/mainbanner.css" rel="stylesheet"> <!--배너 css-->
-<link href="css/global.css" rel="stylesheet"> <!--배너 css-->
 <link href="css/partner.css" rel="stylesheet"> <!--파트너 css-->
 
 <!-- slick css -->

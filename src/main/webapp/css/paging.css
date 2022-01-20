@@ -30,6 +30,7 @@
 }
 .paging .pag-prev, .paging .pag-next, .paging .pag-first, .paging .pag-last {
     min-width: 38px;
+    margin: 0 5px;
 }
 .pag-prev::before, .pag-next::before, .pag-first::before, .pag-last::before, .pag-first::after, .pag-last::after {
     content: '';
@@ -87,6 +88,7 @@
     width: 12px;
     height: 12px;
     margin-bottom: 3px;
+    margin-top: 15px;
     border: 0 solid #ea7e7e;
     border-width: 0 0 2px 2px;
     box-shadow: -1px 2px 2px -1px #ffc0c0;
@@ -125,6 +127,7 @@
     width: 12px;
     height: 12px;
     margin-bottom: 3px;
+    margin-top: 15px;
     border: 0 solid #ea7e7e;
     border-width: 2px 2px 0 0;
     transform: rotate(45deg);

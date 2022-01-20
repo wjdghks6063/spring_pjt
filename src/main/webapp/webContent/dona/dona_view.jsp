@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <!--##### // Visual & LNB #####-->
 <%@ include file = "../common_header.jsp" %>
+<link rel="stylesheet" type="text/css" href="css/view.css" />
 
 <script type="text/javascript">
 
@@ -52,7 +53,7 @@
 	
 	
 </form>
-
+<div class="contents">
 <div class="tab-3" data-swipe='{"type":"case1","start":".active"}'>
 			<ul>
 				<li data-act='tab' class="item active"><a href="Donation"><span class="in">기부</span></a></li>
@@ -120,6 +121,7 @@
 				</div>
 			</div>
 	<style>
+</div>	
 
 	.viewCont{
 		
@@ -142,24 +144,14 @@
 			</div>
         </div>
     </div>
-
+	<div class="btn-area">
+				<a href="" class="btn-5">목록으로</a>
+		</div>
 <!-- 댓글 기능 구현 안함-->
 
 
 
 <script>
-    /*메인 header 따라 오기 */
-    let header = document.querySelector(".header-header-1");
-        let headerHeight = header.offsetHeight;
-
-        window.onscroll = function () {
-        let windowTop = window.scrollY;
-        if (windowTop >= headerHeight) {
-            header.classList.add("is-scroll");
-        } else {
-            header.classList.remove("is-scroll");
-        }
-    };
 // 
 
     var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";

@@ -60,11 +60,10 @@
                         <legend class="blind">활동내역 필터</legend>
                         <div class="activity_category" aria-hidden="false"> <!-- aria-pressed="true" 면 색 들어옴 -->
                             <a href="#" role="button"class="activity_category_item" id="all" aria-pressed="true" data-type="all">전체 조회</a> 
-                            <a href="#" role="button" class="activity_category_item" id="donation" aria-pressed="false" data-type="donation">아동</a> 
-                            <a href="#" role="button" class="activity_category_item" id="funding" aria-pressed="false" data-type="funding">노인</a> 
-                            <a href="#" role="button" class="activity_category_item" id="deposit" aria-pressed="false" data-type="deposit">중구</a>
-                            <a href="#" role="button" class="activity_category_item" id="cong" aria-pressed="false" data-type="cong">유성구</a>
-                            <a href="#" role="button" class="activity_category_item" id="cong" aria-pressed="false" data-type="cong">재난</a>
+                            <a href="#" role="button" class="activity_category_item" id="senior" aria-pressed="false">노인</a> 
+                            <a href="#" role="button" class="activity_category_item" id="child" aria-pressed="false">아동</a> 
+                            <a href="#" role="button" class="activity_category_item" id="disabled" aria-pressed="false">장애</a>
+                            <a href="#" role="button" class="activity_category_item" id="disaster" aria-pressed="false">재난</a>
                         </div>
                             <div class="activity_category_link" data-type="payment"><a href="../홈페이지_기본_레이아웃/manager-donation-search.html" class="link" id="activity_category_payment">
                             <i class="fas fa-search"></i>&nbsp;&nbsp;상세 검색</a>
@@ -78,28 +77,28 @@
                 <div class="my_summary_box">
                     <div class="my_summary_title">
                         <h3 class="title">오늘의 기부 마감</h3>
-                        <span class="number_wrap"><span class="number" id="myCashTotal">0</span> 건</span>
+                        <span class="number_wrap"><span class="number" id="myCashTotal">${TD_list_num}</span> 건</span>
                     </div>
-                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a>
-                    <a href="" class="my_summary_item"><span class="title">달성 미달</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">${TDC_list_num}</strong> 건</span></a>
+                    <a href="" class="my_summary_item"><span class="title">달성 미달</span><span class="number_wrap"><strong class="number" id="myProject">${TDD_list_num}</strong> 건</span></a> 
                 </div>
                 <div class="my_summary_box">
                     <div class="my_summary_title">
                         <h3 class="title">이번 주 기부 일정</h3>
-                        <span class="number_wrap"><span class="number" id="myCashTotal">0</span> 건</span>
+                        <span class="number_wrap"><span class="number" id="myCashTotal">${TW_list_num}</span> 건</span>
                     </div>
-                    <a href="" class="my_summary_item"><span class="title">진행 중</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a>
-                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
-                    <a href="" class="my_summary_item"><span class="title">마감</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">진행 중</span><span class="number_wrap"><strong class="number" id="myProject">${TWP_list_num}</strong> 건</span></a>
+                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">${TWC_list_num}</strong> 건</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">마감</span><span class="number_wrap"><strong class="number" id="myProject">${TWD_list_num}</strong> 건</span></a> 
                 </div>
                 <div class="my_summary_box">
                     <div class="my_summary_title">
                         <h3 class="title">이번 달 기부 일정</h3>
-                        <span class="number_wrap"><span class="number" id="myCashTotal">15</span> 건</span>
+                        <span class="number_wrap"><span class="number" id="myCashTotal">${TM_list_num}</span> 건</span>
                     </div>
-                    <a href="" class="my_summary_item"><span class="title">진행 중</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a>
-                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a> 
-                    <a href="" class="my_summary_item"><span class="title">마감</span><span class="number_wrap"><strong class="number" id="myProject">0</strong> 건</span></a>
+                    <a href="" class="my_summary_item"><span class="title">진행 중</span><span class="number_wrap"><strong class="number" id="myProject">${TMP_list_num}</strong> 건</span></a>
+                    <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">${TMC_list_num}</strong> 건</span></a> 
+                    <a href="" class="my_summary_item"><span class="title">마감</span><span class="number_wrap"><strong class="number" id="myProject">${TMD_list_num}</strong> 건</span></a>
                 </div>
             </div>
         
@@ -208,9 +207,68 @@
         </div>
     </div>
 
-
-
         <script>
+        
+     // 팝업 열기
+        $(document).on("click", "#btn-share", function (e){
+          var target = $(".share-open");
+          $(target).addClass("show");
+        });
+
+        // 외부영역 클릭 시 팝업 닫기
+        $(document).mouseup(function (e){
+          var LayerPopup = $(".share-open");
+          if(LayerPopup.has(e.target).length === 0){
+            LayerPopup.removeClass("show");
+          }
+        });
+        
+        $(document).ready(function () {
+			$("#all").click(function(){ // #1000btn 버튼을 클릭 하면 작동한다.
+				$("#senior").children("li").css("border", "3px solid #ccc"); //버튼들의 색상을 #ccc로 바꾼다.
+				element.activity_category_item.aria-pressed('senior', true);
+				element.activity_category_item.toggle('senior', true);
+				$("#child").children("li").css("border", "3px solid #ccc");
+				$("#disabled").children("li").css("border", "3px solid #ccc");
+				$("#disaster").children("li").css("border", "3px solid #ccc");
+
+				$(this).css("border", "3px solid red"); //클릭한 버튼의 색상은 빨간테를 두른다.
+				$("#point").val(1000).trigger('change'); //hidden 충전 포인트의  value가 1000으로 바뀐다.
+			});
+			$("#5000btn").click(function() {
+				$("#1000btn").children("li").css("border", "3px solid #ccc");
+				$("#10000btn").children("li").css("border", "3px solid #ccc");
+				$("#50000btn").children("li").css("border", "3px solid #ccc");
+
+				$(this).children("li").css("border", "3px solid red");
+				$("#point").val(5000).trigger('change'); //hidden 충전 포인트의 value가 5000으로 바뀐다.
+			});
+			$("#10000btn").click(function() {
+				$("#5000btn").children("li").css("border", "3px solid #ccc");
+				$("#1000btn").children("li").css("border", "3px solid #ccc");
+				$("#50000btn").children("li").css("border", "3px solid #ccc");
+
+				$(this).children("li").css("border", "3px solid red");
+				$("#point").val(10000).trigger('change'); //hidden 충전 포인트의 value가 10000으로 바뀐다.
+			});
+			$("#50000btn").click(function() {
+				$("#5000btn").children("li").css("border", "3px solid #ccc");
+				$("#1000btn").children("li").css("border", "3px solid #ccc");
+				$("#10000btn").children("li").css("border", "3px solid #ccc");
+
+				$(this).children("li").css("border", "3px solid red");
+				$("#point").val(50000).trigger('change'); //hidden 충전 포인트의 value가 50000으로 바뀐다.
+			});
+
+			
+			$("#point").change(function() { //충전 포인트의 값이 바뀔때 작동한다.
+				$("#charge_point").html(Number($(this).val()).toLocaleString()); //hidden 충전 포인트 값이 span 충전포인트(보여지는 값)의 값으로 자동으로 ,를 찍어서 들어간다. ex) 1000 =  1,000
+				var full_point = Number($("#fix_full_point").val()) + Number($("#point").val()); //var = full_point 를 만들고 안에 포인트 값 fix_full_point에 충전할 금액을 더한다.
+				$("#fully_charged").html(full_point.toLocaleString()); // 충전 후 포인트의 span 값인 #fully_charged 에 자동콤마처리를 해서 넣어준다.(html은 change 와 비슷하다.)
+				$("#full_point").val(full_point).trigger('change'); 
+				// hidden 값인 id= full_point에 value를 var = full_point 값으로 바꿔준다. // var = full_point에 fix_full_point를 full_point로 바꾸면 계속 금액이 더해지지만 hidden으로 원래 값에서 더하기를 처리해서 더하기를 방지함
+			});
+        
             var kkeys = [],
                 konami = "38,38,40,40,37,39,37,39,66,65";
             $(document).keydown(function (e) {
@@ -221,6 +279,9 @@
                 }
             });
         </script>
+        
+        
 
 </body>
-</html>
+<!--footer -->
+<%@ include file = "../common_footer.jsp" %>

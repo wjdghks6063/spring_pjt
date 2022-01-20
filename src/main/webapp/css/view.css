@@ -56,14 +56,10 @@
 /*내용-----------------------------------------*/
 
 .board-side { /*기부 박스 위치 조정*/
-    position: static;
     margin: 0px -510px 0 auto;
-    
     display: inline-block;
     position: sticky;
     top: 120px;
-    width: 80px;
-    height: 80px;
 }
 
 .board-side, .board-side .inner { /*기부박스 위치조정*/
@@ -72,8 +68,6 @@
 
 .board-side .inner {
     position: absolute;
-    top: -232%;
-    padding-top: 113px;
     left: 300%;
 }
 

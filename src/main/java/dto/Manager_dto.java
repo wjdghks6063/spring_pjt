@@ -4,7 +4,16 @@ public class Manager_dto {
 	private String search_code, search_name, do_title, do_start_date, do_end_date, dominator, 
 			vol_title, volname, vol_site, vol_start_date, vol_end_date;
 	private int item_money, start_vol, end_vol, total_vol, do_total, do_goal, vol_total, vol_goal;
-
+	
+	
+	//이번달 기간 표시
+	public Manager_dto(String do_start_date, String do_end_date, int do_total, int do_goal) {
+		this.do_start_date = do_start_date;
+		this.do_end_date = do_end_date;
+		this.do_total = do_total;
+		this.do_goal = do_goal;
+	}
+		
 	//진행중인 봉사 표시
 	public Manager_dto(String vol_title, String volname, String vol_site, String vol_start_date, String vol_end_date,
 			int vol_total, int vol_goal) {
