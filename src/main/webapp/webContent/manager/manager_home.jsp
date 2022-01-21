@@ -105,10 +105,10 @@
 
 					<!-- 내 소식 -->
 					<div class="my_recent_news_wrap" id="my_notification">
-						<c:set var="today_dona" value="${PD_list}"></c:set>
+						<c:set var="today_dona" value="${PWD_list}"></c:set>
 						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
 						<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
-						<h3 class="my_recent_news_title">진행중인 기부</h3>
+						<h3 class="my_recent_news_title">이번 주  기부 일정</h3>
 						<span class="my_recent_news_count">총<span class="number"
 							id="my_notification_count">${fn:length(today_dona)}</span>건
 						</span>
@@ -116,15 +116,15 @@
 							<!--전체 보기-->
 							<ol class="list_news" id="my_notification_list">
 								<!-- 마감일이 가까워지는 순서대로 보여져야 함-->
-								<c:forEach items="${PD_list}" var="pd_list">
+								<c:forEach items="${PWD_list}" var="pwd_list">
 									<li class="item_news type_donation">
 										<div class="card_news">
 											<a href="" class="link"></a>
-											<p class="text_content">${pd_list.getDo_title()} (날짜:
-												${pd_list.getDo_start_date()} ~ ${pd_list.getDo_end_date()})</p>
-											<span class="text_information">${pd_list.getDominator()}</span>
+											<p class="text_content">${pwd_list.getDo_title()} (날짜:
+												${pwd_list.getDo_start_date()} ~ ${pwd_list.getDo_end_date()})</p>
+											<span class="text_information">${pwd_list.getDominator()}</span>
 											<!--진행 상황 표시를 위해  퍼센트 표시 -->
-											<c:set var="gage" value="${pd_list.getDo_total() / pd_list.getDo_goal() *100}" />
+											<c:set var="gage" value="${pwd_list.getDo_total() / pwd_list.getDo_goal() *100}" />
 											<!-- gage로 처리하면 99.9647 이런식이라 100%가 적용되지 않기 때문에 gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1))로 반올림 처리한다 -->
 											<c:choose>
 												<c:when test="${gage-(gage%1) >= 100}">
@@ -155,24 +155,24 @@
 
 					<!-- 내 소식 -->
 					<div class="my_recent_news_wrap" id="my_notification">
-						<c:set var="today_vol" value="${PV_list}"></c:set>
+						<c:set var="today_vol" value="${PWV_list}"></c:set>
 						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
 						<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
-						<h3 class="my_recent_news_title">진행중인 봉사 일정</h3>
+						<h3 class="my_recent_news_title">이번 주 봉사 일정</h3>
 						<span class="my_recent_vol_count">총<span class="number"
 							id="my_notification_count">${fn:length(today_vol)}</span>건
 						</span>
 						<div class="my_recent_news_feed">
 							<!--전체 보기-->
 							<ol class="list_news" id="my_notification_list">
-								<c:forEach items="${PV_list}" var="pv_list">
+								<c:forEach items="${PWV_list}" var="pwv_list">
 								<li class="item_news type_funding">
 									<div class="card_news">
 										<a href="" class="link"></a>
-										<p class="text_content">${pv_list.getVol_title()} (장소: ${pv_list.getVol_site()})</p>
-										<span class="text_information">${pv_list.getVolname()}</span> 
-										<span class="text_information">참여인원 : ${pv_list.getVol_total()} / ${pv_list.getVol_goal()} 명</span>
-										<span class="text_information">모집기간 : ${pv_list.getVol_start_date()} ~ ${pv_list.getVol_end_date()}</span>
+										<p class="text_content">${pwv_list.getVol_title()} (장소: ${pwv_list.getVol_site()})</p>
+										<span class="text_information">${pwv_list.getVolname()}</span> 
+										<span class="text_information">참여인원 : ${pwv_list.getVol_total()} / ${pwv_list.getVol_goal()} 명</span>
+										<span class="text_information">모집기간 : ${pwv_list.getVol_start_date()} ~ ${pwv_list.getVol_end_date()}</span>
 										<button class="button_delete"
 											data-id="61d7a8bc2c5ccf943ae43321">
 											<span class="blind">삭제</span>

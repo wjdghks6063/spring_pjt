@@ -5,6 +5,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> </code>
     <!--페이지 css-->
     <link href="css/mypage-menu.css" rel="stylesheet">
     <link href="css/mypage-home.css" rel="stylesheet">
@@ -47,11 +48,11 @@
                 <div class="setting_button" style="float:right;"><a href="javascript:MemberinfoUpdate()" title="정보수정"><i class="fas fa-cog"></i></a></div>
             </div>
             <div id="lnb" class="my_lnb" role="menu">
-                <a href="Mypage_home" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="true">MY홈</a> 
-                <a href="Mypage_news" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">내 소식</a>
-                <a href="Mypage_activity" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">활동내역</a> 
-                <a href="Mypage_regular_payment" role="menuitem" id="my_lnb_item" class="my_lnb_item" aria-current="false">정기결제관리</a>
-                <a href="Mypage_year"role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">연말정산</a>
+                <a href="Mypage_home?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="true">MY홈</a> 
+                <a href="Mypage_news?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">내 소식</a>
+                <a href="Mypage_activity?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">활동내역</a> 
+                <a href="Mypage_regular_payment?t_id=${session_id}" role="menuitem" id="my_lnb_item" class="my_lnb_item" aria-current="false">정기결제관리</a>
+                <a href="Mypage_year?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">연말정산</a>
             </div>
         </div>
         
@@ -60,124 +61,110 @@
             <div class="my_summary_wrap" id="mySummaryAll">
                 <div class="my_summary_box">
                     <div class="my_summary_title">
-                        <h3 class="title">일일 후원금액</h3>
-                        <span class="number_wrap"><span class="number" id="myCashTotal">0</span>원</span>
+                        <h3 class="title">주간 후원금액</h3>  
+                        <span class="number_wrap"><span class="number" id="myCashTotal"><fmt:formatNumber value="${t_today_amount_dto.getToday_amount()}" pattern="#,###"/> </span>원</span>
                     </div>
-                    <a href="/my/timeline#type=payment" class="my_summary_item"><span class="title">일일 기부금액</span><span class="number_wrap"><strong class="number" id="myCharge">0</strong>원</span></a> 
-                    <a href="/my/timeline#type=payment" class="my_summary_item"><span class="title">일일 참여횟수</span><span class="number_wrap"><strong class="number" id="myCharge">0</strong>원</span></a> 
+                       <div class="my_summary_title">
+                        <h3 class="title">주간 봉사횟수</h3><span class="number_wrap"><strong class="number" id="mySponTotal"> ${t_week_count} </strong>회</span>
+                </div>
                 </div>
                 <div class="my_summary_box">
                     <div class="my_summary_title">
-                        <h3 class="title">총 후원금액</h3><span class="number_wrap"><strong class="number" id="mySponTotal">4,200</strong>원</span>
+                        <h3 class="title">총 후원금액</h3><span class="number_wrap"><strong class="number" id="mySponTotal"><fmt:formatNumber value="${t_total_amount_dto.getTotal_amount()}" pattern="#,###"/> </strong>원</span>
                     </div>
-                        <a href="/my/timeline#type=donation" class="my_summary_item"><span class="title">총 기부금액</span><span class="number_wrap"><strong class="number" id="myDonation">4,200</strong>원</span></a> 
-                        <a href="/my/timeline#type=funding" class="my_summary_item"><span class="title">총 참여횟수</span><span class="number_wrap"><strong class="number" id="myJoin">0</strong>회</span></a>
+                    <div class="my_summary_title">
+                        <h3 class="title">총 봉사횟수</h3><span class="number_wrap"><strong class="number" id="mySponTotal"> ${t_total_count}</strong>회</span>
+                </div>
                 </div>
             </div>
         
 
                 <!-- 내 소식 -->
             <div class="my_recent_news_wrap" id="my_notification">
-                <h3 class="my_recent_news_title">내 소식</h3><span class="my_recent_news_count">총<span class="number" id="my_notification_count">42</span>건</span>
+                <h3 class="my_recent_news_title">내 소식</h3><span class="my_recent_news_count"></span>
                 <p class="my_recent_news_guide"><i class="fas fa-exclamation-circle"></i> 결제 알림은 마케팅 알림 수신 동의 여부와 관계없이 발송됩니다.</p><div class="my_recent_news_feed">
                     <ol class="list_news" id="my_notification_list">
-                        <li class="item_news type_funding">
+                      <c:choose>
+                      <c:when test = "${t_mem_dto.getNotification_yn() eq 'y'}">
+                      <c:forEach items="${t_notifi_dtos}" var="notifi_dtos" varStatus="StatusNm">
+                      
+                            
+                            <c:choose>
+                                            	<c:when test="${fn:substring(notifi_dtos.getNotif_no(),0,1) eq 'D'}">
+                                            		<li class="item_news type_funding">
+                                            	</c:when>
+                                            	<c:when test="${fn:substring(notifi_dtos.getNotif_no(),0,1) eq 'V'}">
+                                            		<li class="item_news type_funding_vol">
+                                            	</c:when>
+                                            	</c:choose>
                             <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
+                                <a href="javascript:go();" class="link"></a>
                                 <p class="text_content">
-                                    해피빈 마케팅 정보 수신을 거부하셨습니다. (날짜: 2022-01-07)
+                                	${notifi_dtos.getNotif_title()}	
+                                	
+                                </p><p>
+                                				
                                 </p>
-                                <span class="text_information">해피빈</span>
-                                <span class="text_information">2분전</span>
-                                <button class="button_delete" data-id="61d7a8bc2c5ccf943ae43321">
-                                    <span class="blind">삭제</span>
-                                </button>
+                                <span class="text_information"><c:choose>
+                                								<c:when test="${notifi_dtos.getNotifi_amount() > 2}">
+                                									<fmt:parseNumber value = "${notifi_dtos.getNotifi_amount()}" pattern = "000000" var = "notifi_amount"/>
+                                									결제금액: <fmt:formatNumber value="${notifi_amount}" pattern="#,###"/>원
+                                								</c:when>
+                                								<c:when test="${notifi_dtos.getNotifi_amount() eq 2}"> 
+                                										참여해주셔서 감사합니다
+                                							    </c:when>
+                                								<c:otherwise>
+                                									 새로운 도움이 필요해요 <i style="color:red;"class="fas fa-bell"></i> 
+                                								</c:otherwise>
+                                								</c:choose>
+                                								</span>
+                                								
+                                								<c:choose>
+                                								<c:when test="${notifi_dtos.getNotifi_amount() > 1}">
+                                								</c:when>
+                                								<c:otherwise>
+                                								</c:otherwise>
+                                								</c:choose>
+                                								 <c:forEach items="${t_day_dtos[StatusNm.index]}" varStatus="status" var="day_dtos">
+                                							 <span class="text_information">${day_dtos}</span>
+                                								 </c:forEach>
                             </div>
                         </li>
-                        <li class="item_news type_funding">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    해피빈 마케팅 정보 수신에 동의하셨습니다. (날짜: 2022-01-07)
-                                </p>
-                                <span class="text_information">해피빈</span>
-                                <span class="text_information">2분전</span>
-                                <button class="button_delete" data-id="61d7a8bc49c1a162a5e711aa">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="item_news type_funding">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    해피빈 마케팅 정보 수신을 거부하셨습니다. (날짜: 2022-01-07)
-                                </p>
-                                <span class="text_information">해피빈</span>
-                                <span class="text_information">2분전</span>
-                                <button class="button_delete" data-id="61d7a8b94403a833c495ec99">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
+                        </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+			                       <c:forEach items="${t_notifi_dtos}" var="notifi_dtos" varStatus="StatusNm">
+			                        <c:if test="${notifi_dtos.getNotifi_amount() >= 1}">
+			                    
+			                        <li class="item_news type_funding">
+			                       
+			                            <div class="card_news">
+			                                <a href="javascript:?()" ></a>
+			                                <p class="text_content">
+			                                	${notifi_dtos.getNotif_title()}
+			                                </p>
+			                                <span class="text_information">
+			                                								
+			                                									<fmt:parseNumber value = "${notifi_dtos.getNotifi_amount()}" pattern = "000000" var = "notifi_amount"/>
+			                                									결제금액: <fmt:formatNumber value="${notifi_amount}" pattern="#,###"/>원
+			                                								
+			                                							</span>
+			                                <c:forEach items="${t_day_dtos[StatusNm.index]}" varStatus="status" var="day_dtos">
+			                                 <span class="text_information">${day_dtos}</span>
+			                                  </c:forEach>
+			                            </div>
+			                        </li>
+			                        </c:if>
+			                        </c:forEach>
+                        </c:otherwise>
+          				</c:choose>
+                
                     </ol>
-                </div><a href="/my/notification" class="my_recent_news_link">전체보기 <i class="fas fa-chevron-right"></i></a>
+                </div><a href="Mypage_news?t_id=${session_id}" class="my_recent_news_link">더보기 <i class="fas fa-chevron-right"></i></a>
             </div>
-
-            <div class="my_recent_activity_wrap" id="myActivityAll" aria-hidden="false"><h3 class="blind">나의 최근활동</h3><div id="timelineArea"><div class="my_activity_month"><span class="number">2022.01</span></div>
-            
-            
-                <ul class="my_activity_list" id="timeline202201">
-                    <!-- [D] 콩소멸 -->
-                    <li class="my_activity_cong timeline_root">
-                        <div class="my_activity_inner">
-                            <div class="my_activity_left">
-                                <div class="my_activity_cong_cancelled"></div>
-                            </div>
-                            <div class="my_activity_center">
-                                <strong class="my_activity_date">2022.01.01</strong>
-                                <strong class="my_activity_text2">콩소멸</strong>
-                                <span class="my_activity_title">[2021_3] 지식인 답변채택콩</span>
-                            </div>
-                            <div class="my_activity_right">
-                                <div class="my_activity_price">- <strong class="number">100</strong>원</div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-
-                <div class="my_activity_month"><span class="number">2021.09</span></div>
-                <ul class="my_activity_list" id="timeline202109">
-                    <!-- [D] 콩받음 -->
-                    <li class="my_activity_cong timeline_root">
-                        <div class="my_activity_inner">
-                            <div class="my_activity_left">
-                                <div class="my_activity_cong_success"></div>
-                            </div>
-                            <div class="my_activity_center">
-                                <strong class="my_activity_date">2021.09.23</strong>
-                                <strong class="my_activity_text2">콩받음</strong>
-                                <span class="my_activity_title">[2021_3] 지식인 답변채택콩</span>
-                                <strong class="my_activity_date">2021.12.31 콩소멸 예정</strong>
-                            </div>
-                            <div class="my_activity_right">
-                                <div class="my_activity_price">+ <strong class="number">100</strong>원</div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-            </div><a href="/my/timeline#type=all" class="my_activity_link">활동내역 전체보기</a>
-
-        </div><!-- 활동 내용 div-->
-
-
         </div>
     </div>
 </form>
-
-
         <script>
             /*메인 header 따라 오기 */
             let header = document.querySelector(".header-header-1");

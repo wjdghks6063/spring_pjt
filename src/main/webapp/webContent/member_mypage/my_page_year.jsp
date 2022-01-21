@@ -19,15 +19,15 @@
             </div>
                 <div id="lnb" class="my_lnb" role="menu">
                     <!-- aria-current="#" 여부에 따라 색상 불 들어옴-->
-                    <a href="Mypage_home" role="menuitem" class="my_lnb_item" id="lnb_my_home"
+                    <a href="Mypage_home?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_home"
                         aria-current="false">MY홈</a>
-                    <a href="Mypage_news" role="menuitem" class="my_lnb_item"
+                    <a href="Mypage_news?t_id=${session_id}" role="menuitem" class="my_lnb_item"
                         id="lnb_my_notification" aria-current="false">내 소식</a>
-                    <a href="Mypage_activity" role="menuitem" class="my_lnb_item"
+                    <a href="Mypage_activity?t_id=${session_id}" role="menuitem" class="my_lnb_item"
                         id="lnb_my_activity" aria-current="false">활동내역</a>
-                    <a href="Mypage_regular_payment" role="menuitem" id="my_lnb_item"
+                    <a href="Mypage_regular_payment?t_id=${session_id}" role="menuitem" id="my_lnb_item"
                         class="my_lnb_item" aria-current="false">정기결제관리</a>
-                    <a href="Mypage_year" role="menuitem" class="my_lnb_item"
+                    <a href="Mypage_year?t_id=${session_id}" role="menuitem" class="my_lnb_item"
                         id="lnb_my_tax" aria-current="true">연말정산</a>
                 </div>
             </div>

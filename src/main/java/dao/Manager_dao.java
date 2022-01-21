@@ -15,13 +15,14 @@ public class Manager_dao {
 	ResultSet rs = null;
 
 	
-	//*오늘  기부 달성*/
-	public ArrayList<Manager_dto> getToday(){
+	//*오늘  기부 일정*/
+	public ArrayList<Manager_dto> getToday(String search){
 		ArrayList<Manager_dto> TD_list = new ArrayList<>();
 		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd') as today, total, goal\r\n" + 
-						"from donation\r\n" + 
-						"where to_char(CURRENT_date,'yyyy-mm-dd') = end_date";
+						"total, goal from donation\r\n" + 
+						"where to_char(CURRENT_date,'yyyy-mm-dd') = end_date\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -49,13 +50,14 @@ public class Manager_dao {
 	}
 	
 	//*오늘  기부 달성*/
-	public ArrayList<Manager_dto> getTodayComplete(){
+	public ArrayList<Manager_dto> getTodayComplete(String search){
 		ArrayList<Manager_dto> TDC_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd') as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"total, goal from donation\r\n" + 
 						"where to_char(CURRENT_date,'yyyy-mm-dd') = end_date\r\n" + 
-						"and total >= goal";
+						"and total >= goal\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -83,13 +85,14 @@ public class Manager_dao {
 	}
 	
 	//*오늘  기부 미달*/
-	public ArrayList<Manager_dto> getTodayDeadline(){
+	public ArrayList<Manager_dto> getTodayDeadline(String search){
 		ArrayList<Manager_dto> TDD_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd') as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date, to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
+						"search, total, goal  from donation\r\n" + 
 						"where to_char(CURRENT_date,'yyyy-mm-dd') = end_date\r\n" + 
-						"and total < goal";
+						"and total < goal\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -118,14 +121,14 @@ public class Manager_dao {
 	
 	
 	//*이번주  기부 기간 만료*/
-	public ArrayList<Manager_dto> getThisWeekDeadline(){
+	public ArrayList<Manager_dto> getThisWeekDeadline(String search){
 		ArrayList<Manager_dto> TWD_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') as sta_week , TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd') as last_week,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, goal, total\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, goal, total from donation\r\n" + 
 						"where TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') <= end_date\r\n" + 
-						"and end_date < to_char(CURRENT_date,'yyyy-mm-dd')";
+						"and end_date < to_char(CURRENT_date,'yyyy-mm-dd')\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -153,15 +156,14 @@ public class Manager_dao {
 	}
 	
 	//*이번주  기부 달성완료*/
-	public ArrayList<Manager_dto> getThisWeekComplete(){
+	public ArrayList<Manager_dto> getThisWeekComplete(String search){
 		ArrayList<Manager_dto> TWC_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') as sta_week , TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd') as last_week,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, total, goal from donation\r\n" + 
 						"where TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') <= end_date\r\n" + 
 						"and end_date <= TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd')\r\n" + 
-						"and total >= goal";
+						"and total >= goal and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -189,15 +191,15 @@ public class Manager_dao {
 	}
 	
 	//*이번주  기부 진행중*/
-	public ArrayList<Manager_dto> getThisWeekProceeding(){
+	public ArrayList<Manager_dto> getThisWeekProceeding(String search){
 		ArrayList<Manager_dto> TWP_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') as sta_week ,TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd') as last_week,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, total, goal from donation\r\n" + 
 						"where TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') <= end_date\r\n" + 
 						"and end_date <= TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd')\r\n" + 
-						"and end_date >= to_char(CURRENT_date,'yyyy-mm-dd')";
+						"and end_date >= to_char(CURRENT_date,'yyyy-mm-dd')\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -225,14 +227,14 @@ public class Manager_dao {
 	}
 	
 	//*이번주  기부일정*/
-	public ArrayList<Manager_dto> getThisWeek(){
+	public ArrayList<Manager_dto> getThisWeek(String search){
 		ArrayList<Manager_dto> TW_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') as sta_week , TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd') as last_week,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, total, goal from donation\r\n" + 
 						"where TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') <= end_date\r\n" + 
-						"and end_date <= TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd')";
+						"and end_date <= TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd')\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -259,15 +261,15 @@ public class Manager_dao {
 		return TW_list;
 	}
 	
-	//*이번달 진행중 기부현황*/
-	public ArrayList<Manager_dto> getThisMonthDeadline(){
+	//*이번달 기부  마감*/
+	public ArrayList<Manager_dto> getThisMonthDeadline(String search){
 		ArrayList<Manager_dto> TMD_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(sysdate,'yyyy-mm') || '-01' as sta_month ,to_char(LAST_DAY(sysdate),'yyyy-mm-dd') as last_month,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, goal, total\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, goal, total from donation\r\n" + 
 						"where to_char(sysdate,'yyyy-mm') || '-01' <= end_date\r\n" + 
-						"and end_date < to_char(CURRENT_date,'yyyy-mm-dd')";
+						"and end_date < to_char(CURRENT_date,'yyyy-mm-dd')\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -294,16 +296,16 @@ public class Manager_dao {
 		return TMD_list;
 	}	
 	
-	//*이번달 진행중 기부현황*/
-	public ArrayList<Manager_dto> getThisMonthComplete(){
+	//*이번달 기부달성 현황*/
+	public ArrayList<Manager_dto> getThisMonthComplete(String search){
 		ArrayList<Manager_dto> TMC_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(sysdate,'yyyy-mm') || '-01' as sta_month ,to_char(LAST_DAY(sysdate),'yyyy-mm-dd') as last_month,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, total, goal from donation\r\n" + 
 						"where to_char(sysdate,'yyyy-mm') || '-01' <= end_date\r\n" + 
 						"and end_date <= to_char(LAST_DAY(sysdate),'yyyy-mm-dd')\r\n" + 
-						"and total >= goal";
+						"and total >= goal\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -332,15 +334,15 @@ public class Manager_dao {
 	
 	
 	//*이번달 진행중 기부현황*/
-	public ArrayList<Manager_dto> getThisMonthProceeding(){
+	public ArrayList<Manager_dto> getThisMonthProceeding(String search){
 		ArrayList<Manager_dto> TMP_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(sysdate,'yyyy-mm') || '-01' as sta_month ,to_char(LAST_DAY(sysdate),'yyyy-mm-dd') as last_month,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, goal, total\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, goal, total from donation\r\n" + 
 						"where to_char(sysdate,'yyyy-mm') || '-01' <= end_date\r\n" + 
 						"and end_date <= to_char(LAST_DAY(sysdate),'yyyy-mm-dd')\r\n" + 
-						"and end_date >= to_char(CURRENT_date,'yyyy-mm-dd')";
+						"and end_date >= to_char(CURRENT_date,'yyyy-mm-dd')\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -368,14 +370,14 @@ public class Manager_dao {
 	}
 	
 	//*이번달 총 기부 일정*/
-	public ArrayList<Manager_dto> getThisMonth(){
+	public ArrayList<Manager_dto> getThisMonth(String search){
 		ArrayList<Manager_dto> TM_list = new ArrayList<>();
-		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date, \r\n" + 
-						"to_char(sysdate,'yyyy-mm') || '-01' as sta_month ,to_char(LAST_DAY(sysdate),'yyyy-mm-dd') as last_month,\r\n" + 
-						"to_char(CURRENT_date,'yyyy-mm-dd')as today, total, goal\r\n" + 
-						"from donation\r\n" + 
+		String query="select to_char(start_date,'yyyy-mm-dd') start_date,to_char(end_date,'yyyy-mm-dd') end_date,\r\n" + 
+						"search, total, goal from donation\r\n" + 
 						"where to_char(sysdate,'yyyy-mm') || '-01' <= end_date\r\n" + 
-						"and end_date <= to_char(LAST_DAY(sysdate),'yyyy-mm-dd')";
+						"and end_date <= to_char(LAST_DAY(sysdate),'yyyy-mm-dd')\r\n" + 
+						"and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
 		try {
 			con = DBConnection.getConnection();
 			ps = con.prepareStatement(query);
@@ -398,18 +400,98 @@ public class Manager_dao {
 		} finally {
 			DBConnection.closeDB(con, ps, rs);
 		}
-		
 		return TM_list;
 	}
+
 	
-	//진행중인 봉사 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
-			public ArrayList<Manager_dto> getProceedingVol(){
-				ArrayList<Manager_dto> PV_list = new ArrayList<>();
+	//이번달 달성완료 기부 목록  //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
+	public ArrayList<Manager_dto> getCompleteMonthDona(String search){
+		ArrayList<Manager_dto> CMD_list = new ArrayList<>();
+		String query="select title, dominator, to_char(start_date,'yyyy-mm-dd') start_date,\r\n" + 
+						"to_char(end_date,'yyyy-mm-dd') end_date, to_char(CURRENT_DATE, 'yyyy-MM-dd') today, total, goal from donation\r\n" + 
+						"where to_char(sysdate,'yyyy-mm') || '-01' <= end_date\r\n" + 
+						"and end_date <= to_char(LAST_DAY(sysdate),'yyyy-mm-dd')\r\n" + 
+						"and total >= goal and search like '%"+search+"%'\r\n" + 
+						"order by end_date asc";
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String title 			= rs.getString("title");
+				String volname 			= rs.getString("dominator");
+				String vol_site 		= rs.getString("today");
+				String vol_start_date 	= rs.getString("start_date");
+				String vol_end_date 	= rs.getString("end_date");
+				int vol_total 			= rs.getInt("total");
+				int vol_goal 			= rs.getInt("goal");
+				CMD_list.add(new Manager_dto(title, volname, vol_site, vol_start_date, vol_end_date, vol_total, vol_goal));
+				/*오늘날짜를 받기 위해 today를 생성해야 되서 봉사 목록을 사용함*/
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("\n\n--------------------------------------------");
+			System.out.println("getCompleteMonthDona 메소드에서 에러가 발생했습니다.");
+			System.out.println("실행한 qury : "+query);
+			System.out.println("--------------------------------------------\n\n");
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return CMD_list;
+	}
+	
+	//이번달 진행중인 기부 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
+	public ArrayList<Manager_dto> getProceedingMonthDona(String search){
+		ArrayList<Manager_dto> PMD_list = new ArrayList<>();
+		String query="select title, dominator, to_char(start_date,'yyyy-mm-dd') start_date,\r\n" + 
+						"to_char(end_date,'yyyy-mm-dd') end_date, to_char(CURRENT_DATE, 'yyyy-MM-dd') today, total, goal from donation\r\n" + 
+						"where to_char(sysdate,'yyyy-mm') || '-01' <= end_date\r\n" + 
+						"and end_date <= to_char(LAST_DAY(sysdate),'yyyy-mm-dd')\r\n" + 
+						"and to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+						"and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+						"and search like '%"+search+"%' order by end_date asc";
+		try {
+			con = DBConnection.getConnection();
+			ps = con.prepareStatement(query);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				String title 			= rs.getString("title");
+				String volname 			= rs.getString("dominator");
+				String vol_site 		= rs.getString("today");
+				String vol_start_date 	= rs.getString("start_date");
+				String vol_end_date 	= rs.getString("end_date");
+				int vol_total 			= rs.getInt("total");
+				int vol_goal 			= rs.getInt("goal");
+				PMD_list.add(new Manager_dto(title, volname, vol_site, vol_start_date, vol_end_date, vol_total, vol_goal));
+				/*오늘날짜를 받기 위해 today를 생성해야 되서 봉사 목록을 사용함*/
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+			System.out.println("\n\n--------------------------------------------");
+			System.out.println("getProceedingMonthDona 메소드에서 에러가 발생했습니다.");
+			System.out.println("실행한 qury : "+query);
+			System.out.println("--------------------------------------------\n\n");
+		} finally {
+			DBConnection.closeDB(con, ps, rs);
+		}
+		
+		return PMD_list;
+	}
+//---------------------------------home 내용-------------------------------------------------------------------------------------------	
+	
+	//이번주 진행중인 봉사 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
+			public ArrayList<Manager_dto> getProceedingWeekVol(){
+				ArrayList<Manager_dto> PWV_list = new ArrayList<>();
 				String query="select title, voname, volunteersite, to_char(start_date,'yyyy-MM-dd') as start_date,\r\n" + 
-						"        to_char(end_date,'yyyy-MM-dd') as end_date, total, goal from volunteer\r\n" + 
-						"		where to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-						"		and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-						"		ORDER BY end_date asc";
+							"to_char(end_date,'yyyy-MM-dd') as end_date, total, goal from volunteer\r\n" + 
+							"where TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') <= end_date\r\n" + 
+							"and end_date <= TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd')\r\n" + 
+							"and to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+							"and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+							"ORDER BY end_date asc";
 				try {
 					con = DBConnection.getConnection();
 					ps = con.prepareStatement(query);
@@ -424,30 +506,33 @@ public class Manager_dao {
 						int vol_total 			= rs.getInt("total");
 						int vol_goal 			= rs.getInt("goal");
 						
-						PV_list.add(new Manager_dto(vol_title, volname, vol_site, vol_start_date, vol_end_date, vol_total, vol_goal));
+						PWV_list.add(new Manager_dto(vol_title, volname, vol_site, vol_start_date, vol_end_date, vol_total, vol_goal));
 					}
 				} catch(SQLException e) {
 					e.printStackTrace();
 					System.out.println("\n\n--------------------------------------------");
-					System.out.println("getProceedingVol 메소드에서 에러가 발생했습니다.");
+					System.out.println("getProceedingWeekVol 메소드에서 에러가 발생했습니다.");
 					System.out.println("실행한 qury : "+query);
 					System.out.println("--------------------------------------------\n\n");
 				} finally {
 					DBConnection.closeDB(con, ps, rs);
 				}
 				
-				return PV_list;
+				return PWV_list;
 			}
 	
 	
-	//진행중인 기부 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
-		public ArrayList<Manager_dto> getProceedingDona(){
-			ArrayList<Manager_dto> PD_list = new ArrayList<>();
-			String query="select title, dominator, to_char(start_date,'yyyy-MM-dd') as start_date,\r\n" + 
-					"		to_char(end_date,'yyyy-MM-dd') as end_date, total, goal from donation \r\n" + 
-					"		where to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-					"		and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
-					"		ORDER BY end_date asc";
+	//이번주 진행중인 기부 상황 (기간이 지나지 않은 것만 표시) //초단위가 들어가기 때문에 전부 to_char로 일단위까지만 처리한다.
+		public ArrayList<Manager_dto> getProceedingWeekDona(){
+			ArrayList<Manager_dto> PWD_list = new ArrayList<>();
+			String query="select title, dominator, to_char(start_date,'yyyy-mm-dd') start_date,\r\n" + 
+							"to_char(end_date,'yyyy-mm-dd') end_date,total, goal\r\n" + 
+							"from donation\r\n" + 
+							"where TO_CHAR(TRUNC(sysdate, 'd'),'yyyy-mm-dd') <= end_date\r\n" + 
+							"and end_date <= TO_CHAR(TRUNC(sysdate+6 , 'd'),'yyyy-mm-dd')\r\n" + 
+							"and to_char(start_date,'yyyy-MM-dd') <= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+							"and to_char(end_date,'yyyy-MM-dd') >= to_char(CURRENT_DATE, 'yyyy-MM-dd')\r\n" + 
+							"ORDER BY end_date asc";
 			try {
 				con = DBConnection.getConnection();
 				ps = con.prepareStatement(query);
@@ -461,23 +546,22 @@ public class Manager_dao {
 					int do_total 			= rs.getInt("total");
 					int do_goal 			= rs.getInt("goal");
 					
-					PD_list.add(new Manager_dto(do_title, do_start_date, do_end_date, dominator, do_total, do_goal));
+					PWD_list.add(new Manager_dto(do_title, do_start_date, do_end_date, dominator, do_total, do_goal));
 				}
 			} catch(SQLException e) {
 				e.printStackTrace();
 				System.out.println("\n\n--------------------------------------------");
-				System.out.println("getProceedingDona 메소드에서 에러가 발생했습니다.");
+				System.out.println("getProceedingWeekDona 메소드에서 에러가 발생했습니다.");
 				System.out.println("실행한 qury : "+query);
 				System.out.println("--------------------------------------------\n\n");
 			} finally {
 				DBConnection.closeDB(con, ps, rs);
 			}
 			
-			return PD_list;
+			return PWD_list;
 		}
 	
-	//오늘의 봉사 일정
-	
+	//오늘의 봉사 일정 목록
 	public ArrayList<Manager_dto> getVolToday(){
 		ArrayList<Manager_dto> vol_list = new ArrayList<>();
 		String query="select a.e_date,a.total,b.s_date\r\n" + 

@@ -19,14 +19,6 @@
 
 
 </head>
-<script>
-	function goMypage(id){
-		index.method="post";
-		index.action="/Mypage_home";
-		index.submit();
-	}
-</script>
-
     
     <div class ="mainbanner-box">
         <div class ="mainbanner-background"> <!-- 이미지 색상 교체 박스 -->

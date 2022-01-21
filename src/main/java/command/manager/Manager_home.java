@@ -13,8 +13,8 @@ public class Manager_home implements Command {
 		String id = request.getParameter("t_id");
 		Manager_dao dao = new Manager_dao();
 		
-		request.setAttribute("PV_list", dao.getProceedingVol());
-		request.setAttribute("PD_list", dao.getProceedingDona());
+		request.setAttribute("PWV_list", dao.getProceedingWeekVol());
+		request.setAttribute("PWD_list", dao.getProceedingWeekDona());
 		request.setAttribute("vol_list", dao.getVolToday());
 		request.setAttribute("dao", dao);
 		request.setAttribute("list", dao.getSearchList());

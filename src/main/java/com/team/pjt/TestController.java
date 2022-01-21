@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,7 +34,7 @@ import mail.NewPassword;
 
 @Controller
 public class TestController {
-	@RequestMapping("/Join")
+	@RequestMapping("/Join" )
 	public String Index(HttpServletRequest request) {
 		String tell = request.getParameter("t_tell");
 		request.setAttribute("t_tell", tell);
@@ -74,7 +75,7 @@ public class TestController {
 		}
 		out.print(pw);
 	}
-	@RequestMapping("/MemberLogin")
+	@RequestMapping(value="/MemberLogin", method= {RequestMethod.GET, RequestMethod.POST})
 	public String MemberLogin(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		Member_dao dao = new Member_dao();

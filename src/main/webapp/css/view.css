@@ -59,11 +59,12 @@
     margin: 0px -510px 0 auto;
     display: inline-block;
     position: sticky;
-    top: 120px;
+    top: 0px;
 }
 
 .board-side, .board-side .inner { /*기부박스 위치조정*/
     width: 320px;
+    top:-15px
 }
 
 .board-side .inner {

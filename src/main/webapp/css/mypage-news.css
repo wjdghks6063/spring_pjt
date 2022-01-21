@@ -95,6 +95,7 @@ button, input[type=button], input[type=checkbox]+label, input[type=radio]+label,
 /*마케팅 동의 on,off 버튼*/
 .my_news_receiption {
     position: absolute;
+    margin: -22px;
     top: 22px;
     right: 23px;
 }
@@ -111,6 +112,7 @@ button, input[type=button], input[type=checkbox]+label, input[type=radio]+label,
 .my_news_receiption .label_switch {
     display: inline-block;
     position: relative;
+    margin-left: 12px;
     width: 64px;
     height: 28px;
     background-color: #ccc;

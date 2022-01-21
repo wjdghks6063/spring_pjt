@@ -19,6 +19,7 @@
 <link href="css/header.css" rel="stylesheet"> <!-- header css-->
 <link href="css/sub-header.css" rel="stylesheet"> <!--서브 header css-->
 
+<!-- 임시 서브 헤더-->
 <link href="css/view.css" rel="stylesheet"> <!--서브 header css-->
 <link href="css/global.css" rel="stylesheet">
 
@@ -32,13 +33,44 @@
   <script src="/js/common.js"></script>
 
 </head>
-<body>
 
+
+<script>
+/*메인 header 따라 오기 common_header에서 사용하기 때문에 주석처리 함  */ 
+
+let header = document.querySelector(".header-header-1");
+    let headerHeight = header.offsetHeight;
+
+    window.onscroll = function () {
+    let windowTop = window.scrollY;
+    if (windowTop >= headerHeight) {
+        header.classList.add("is-scroll");
+    } else {
+        header.classList.remove("is-scroll");
+    }
+};
+
+</script>
+
+<script>
+	function goDashboard(id){
+		index.t_gubun.value="Home";
+		index.method="post";
+		index.action="Manager";
+		index.submit();
+	}
+	function goMypage(id){
+		index.t_id.value=id;
+		index.method="post";
+		index.action="/Mypage_home";
+		index.submit();
+	}
+</script>
+<body>
 <form name="index">
 	<input type="hidden" name="t_id">
 	<input type="hidden" name="t_gubun">
 </form>
-
 <div id ="containar">
 <div id ="warp" class="warp">    
     <header id="header" class="header-header-1">
@@ -57,18 +89,18 @@
             </div>
             
             <div class="main-top-login">
-             <c:choose>
-	  			  <c:when test="${not empty session_name && session_level ne 'top'}">
-	  			   <a class="login" href="javascript:goMypage('${session_id}')" style="font-size:20px;margin-bottom:5px;">${session_name}님 &nbsp&nbsp</a>
-	     			   <a class="login" href ="Logout">로그아웃</a>
-		  		  </c:when>
-		  		  <c:when test="${session_level eq 'top'}">
-						 <a class="login" href="javascript:goDashboard('${session_id}')" style="font-size:20px;margin-bottom:5px;">관리자님&nbsp&nbsp&nbsp</a>
-	     			   <a class="login" href ="Logout">로그아웃</a>  		  
-		  		  </c:when>
-			      <c:otherwise>
-			        <a class="login" href ="Login">로그인</a>
-		          </c:otherwise>
+                     <c:choose>
+  			  <c:when test="${not empty session_name && session_level ne 'top'}">
+  			   <a class="login" href="javascript:goMypage('${session_id}')" style="font-size:20px;margin-bottom:5px;">${session_name}님 &nbsp&nbsp</a>
+     			   <a class="login" href ="Logout">로그아웃</a>
+	  		  </c:when>
+	  		  <c:when test="${session_level eq 'top'}">
+					 <a class="login" href="javascript:goDashboard()" style="font-size:20px;margin-bottom:5px;">관리자님&nbsp&nbsp&nbsp</a>
+     			   <a class="login" href ="Logout">로그아웃</a>  		  
+	  		  </c:when>
+		      <c:otherwise>
+		        <a class="login" href ="Login">로그인</a>
+	          </c:otherwise>
 			</c:choose>
                 <span class="longbar"></span> <!--로그인 돋보기 사이 | 막대기 -->
                 <a  class="search-img" href =""><i class="fas fa-search" style="font-size: 22px;"></i></a>
@@ -77,38 +109,6 @@
     </div>
     </header>
 </div>
-<script>
-	function goDashboard(id){
-		index.t_gubun.value="Home";
-		index.method="post";
-		index.action="Manager";
-		index.submit();
-	}
-	
-	function goMypage(id){
-		index.method="post";
-		index.action="/Mypage_home";
-		index.submit();
-	}
-</script>
-
-
-<script>
-     /*메인 header 따라 오기 */
-     let header = document.querySelector(".header-header-1");
-     let headerHeight = header.offsetHeight;
-
-     window.onscroll = function () {
-         let windowTop = window.scrollY;
-         if (windowTop >= headerHeight) {
-             header.classList.add("is-scroll");
-         } else {
-             header.classList.remove("is-scroll");
-         }
-     };
-     // 
-
-</script>
 
 
 	<!--##### // Visual & LNB #####-->

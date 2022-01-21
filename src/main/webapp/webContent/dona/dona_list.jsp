@@ -7,7 +7,6 @@
 <%@ include file = "../common_header.jsp" %>
 <script type="text/javascript">
 	function goSearch(search){
-	
 		sear.t_search.value=search;
 		sear.method="post";
 		sear.action="Donation";

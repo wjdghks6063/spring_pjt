@@ -15,6 +15,50 @@ public class Member_dao {
 		PreparedStatement 	ps 	= null;
 		ResultSet 			rs 	= null;
 		
+		//noti_yn 변환
+		public int notifi_yn_change(String id,String notification_yn_past) {
+			int result = 0;
+			String query="";
+			if(notification_yn_past.equals("y")) {
+				query = "update member set notification_yn = 'n' where id='"+id+"'";
+			}else {
+				query = "update member set notification_yn = 'y' where id='"+id+"'";
+			}
+			   try {
+			         con = DBConnection.getConnection();
+			         ps = con.prepareStatement(query);
+			         result = ps.executeUpdate();
+			}catch(SQLException e) {
+				System.out.println("notifi_yn_change() 오류");
+				System.out.println("query :"+query);
+				e.printStackTrace();			
+			}finally {
+				DBConnection.closeDB(con, ps, rs);
+			}
+			return result;
+		}
+		
+		//notif_yn 값 가져오기
+		public String notifi_yn(String id) {
+			String notification_yn = "";
+			String query = "select notification_yn from member where id ='"+id+"'";
+			try {
+				con = DBConnection.getConnection();
+				ps  = con.prepareStatement(query);
+				rs  = ps.executeQuery();
+				if(rs.next()){
+					notification_yn = rs.getString(1);
+				}
+			}catch(SQLException e) {
+				System.out.println("notifi_yn() 오류");
+				System.out.println("query :"+query);
+				e.printStackTrace();			
+			}finally {
+				DBConnection.closeDB(con, ps, rs);
+			}
+			return notification_yn;
+		}
+		
 		//멤버 수정저장(패스워드 포함) 
 		public int memberUpdate2(Member_dto dto){
 			int result = 0;
@@ -118,7 +162,7 @@ public class Member_dao {
 		//회원 상세조회 O
 		public Member_dto getMemberView(String id) {
 			Member_dto dto = null;
-			String query = "select id,name,password,email,tell,info_yn,reg_date,exit_date,exit,address_1,address_2 from member where id ='"+id+"'";
+			String query = "select id,name,password,email,tell,info_yn,reg_date,exit_date,exit,address_1,address_2,notification_yn from member where id ='"+id+"'";
 			try {
 				con = DBConnection.getConnection();
 				ps  = con.prepareStatement(query);
@@ -135,7 +179,8 @@ public class Member_dao {
 					String exit_date = rs.getString(9);
 					String address_1 = rs.getString(10);
 					String address_2 = rs.getString(11);
-					dto = new Member_dto(idd,name,password,email,tell,address_1,address_2,info_yn,reg_date,exit_date,exit);
+					String notification_yn = rs.getString(12);
+					dto = new Member_dto(idd,name,password,email,tell,address_1,address_2,info_yn,reg_date,exit_date,exit,notification_yn);
 				}
 			}catch(SQLException e) {
 				System.out.println("getMemberView() 오류");

@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import command.mypage.Mypage_activity;
+import command.mypage.Mypage_activity_dona;
+import command.mypage.Mypage_activity_vol;
 import command.mypage.Mypage_home;
+import command.mypage.Mypage_view;
 import command.mypage.mypage_update;
 import common.Command;
 import dao.Member_dao;
@@ -33,13 +37,49 @@ public class MypageController {
 }
 	@RequestMapping("/Mypage_news")
 	public String Mypage_news(HttpServletRequest request) {
+		Command mypage = new Mypage_view();
+		mypage.execute(request);
+		return "member_mypage/my_page_news";
+}
+	
+	@RequestMapping("/Notification_change")
+	public String Notification_change(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("t_id");
+		PrintWriter out =null;
+		try {
+			out = response.getWriter();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Member_dao mem_dao = new Member_dao();
+		String notification_yn_past = mem_dao.notifi_yn(id);
+		int result = mem_dao.notifi_yn_change(id,notification_yn_past);
+		
+		String msg = result ==1 ? "change" : "fail";
+		
+		out.print(msg);
 		return "member_mypage/my_page_news";
 }
 	@RequestMapping("/Mypage_activity")
 	public String Mypage_activity(HttpServletRequest request) {
+		Command mypage = new Mypage_activity();
+		mypage.execute(request);
 		return "member_mypage/my_page_activity";
 }
-
+	@RequestMapping("/Mypage_activity_dona")
+	public String Mypage_activity_dona(HttpServletRequest request) {
+		Command mypage = new Mypage_activity_dona();
+		mypage.execute(request);
+		return "member_mypage/my_page_activity_dona";
+	}
+	@RequestMapping("/Mypage_activity_vol")
+	public String Mypage_activity_vol(HttpServletRequest request) {
+		Command mypage = new Mypage_activity_vol();
+		mypage.execute(request);
+		return "member_mypage/my_page_activity_vol";
+	}
+	
 	@RequestMapping("/Mypage_regular_payment")
 	public String Mypage_regular_payment(HttpServletRequest request) {
 		return "member_mypage/my_page_regular_payment";

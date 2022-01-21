@@ -1,7 +1,7 @@
 package dto;
 
 public class Member_dto {
-	String id, name,password,email,tell,address_1,address_2,info_yn,reg_date,exit_date,exit;
+	String id, name,password,email,tell,address_1,address_2,info_yn,reg_date,exit_date,exit,notification_yn;
 
 	//멤버 수정 저장(패스워드미포함)
 	public Member_dto(String id, String name, String email, String tell, String address_1, String address_2,
@@ -15,6 +15,7 @@ public class Member_dto {
 		this.address_2 = address_2;
 		this.info_yn = info_yn;
 	}
+	
 	//멤버 수정 저장(패스워드포함)
 	public Member_dto(String id, String name, String password, String email, String tell, String address_1, String address_2,
 			String info_yn) {
@@ -33,7 +34,7 @@ public class Member_dto {
 
 
 	public Member_dto(String id, String name, String password, String email, String tell, String address_1,String address_2,
-			String info_yn, String reg_date, String exit_date, String exit) {
+			String info_yn, String reg_date, String exit_date, String exit, String notification_yn) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,6 +47,7 @@ public class Member_dto {
 		this.reg_date = reg_date;
 		this.exit_date = exit_date;
 		this.exit = exit;
+		this.notification_yn = notification_yn;
 	}
 	
 	
@@ -217,6 +219,14 @@ public class Member_dto {
 
 	public void setExit(String exit) {
 		this.exit = exit;
+	}
+
+	public String getNotification_yn() {
+		return notification_yn;
+	}
+
+	public void setNotification_yn(String notification_yn) {
+		this.notification_yn = notification_yn;
 	}
 
 

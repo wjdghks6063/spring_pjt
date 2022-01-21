@@ -28,6 +28,13 @@
 		goPage.action="Manager";
 		goPage.submit();
 	}
+	function goSearch(search){
+		sear.t_search.value=search;
+		sear.t_gubun.value="Dona";
+		sear.method="post";
+		sear.action="Manager";
+		sear.submit();
+	}
 </script>
 
 <body>
@@ -55,15 +62,17 @@
         <div role="main" id="content" class="my_content">
 
             <h3 class="my_title">기부 내역</h3>
-                <form target="_self">
+                <form name="sear">
+                	<input type="hidden" name="t_search">
+                	<input type="hidden" name="t_gubun">
                     <fieldset>
                         <legend class="blind">활동내역 필터</legend>
                         <div class="activity_category" aria-hidden="false"> <!-- aria-pressed="true" 면 색 들어옴 -->
-                            <a href="#" role="button"class="activity_category_item" id="all" aria-pressed="true" data-type="all">전체 조회</a> 
-                            <a href="#" role="button" class="activity_category_item" id="senior" aria-pressed="false">노인</a> 
-                            <a href="#" role="button" class="activity_category_item" id="child" aria-pressed="false">아동</a> 
-                            <a href="#" role="button" class="activity_category_item" id="disabled" aria-pressed="false">장애</a>
-                            <a href="#" role="button" class="activity_category_item" id="disaster" aria-pressed="false">재난</a>
+                            <a href="javascript:goSearch('')" role="button"class="activity_category_item" id="all" <c:if test="${t_search eq ''}">aria-pressed='true'</c:if>>전체 조회</a> 
+                            <a href="javascript:goSearch('senior')" role="button" class="activity_category_item" id="senior"  <c:if test="${t_search eq 'senior'}">aria-pressed='true'</c:if>>노인</a> 
+                            <a href="javascript:goSearch('child')" role="button" class="activity_category_item" id="child" <c:if test="${t_search eq 'child'}">aria-pressed='true'</c:if>>아동</a> 
+                            <a href="javascript:goSearch('disabled')" role="button" class="activity_category_item" id="disabled" <c:if test="${t_search eq 'disabled'}">aria-pressed='true'</c:if>>장애</a>
+                            <a href="javascript:goSearch('disaster')" role="button" class="activity_category_item" id="disaster" <c:if test="${t_search eq 'disaster'}">aria-pressed='true'</c:if>>재난</a>
                         </div>
                             <div class="activity_category_link" data-type="payment"><a href="../홈페이지_기본_레이아웃/manager-donation-search.html" class="link" id="activity_category_payment">
                             <i class="fas fa-search"></i>&nbsp;&nbsp;상세 검색</a>
@@ -76,7 +85,7 @@
             <div class="my_summary_wrap" id="mySummaryAll">
                 <div class="my_summary_box">
                     <div class="my_summary_title">
-                        <h3 class="title">오늘의 기부 마감</h3>
+                        <h3 class="title">오늘의 기부 일정</h3>
                         <span class="number_wrap"><span class="number" id="myCashTotal">${TD_list_num}</span> 건</span>
                     </div>
                     <a href="" class="my_summary_item"><span class="title">달성 완료</span><span class="number_wrap"><strong class="number" id="myProject">${TDC_list_num}</strong> 건</span></a>
@@ -103,103 +112,112 @@
             </div>
         
                 <!-- 진행중 기부 -->
-					<div class="my_recent_news_wrap" id="my_notification">
-						<c:set var="today_dona" value="${PD_list}"></c:set>
-						<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
-						<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
-						<h3 class="my_recent_news_title">진행중인 기부</h3>
-						<span class="my_recent_news_count">총<span class="number"
-							id="my_notification_count">${fn:length(today_dona)}</span>건
-						</span>
-						<div class="my_recent_news_feed">
-							<!--전체 보기-->
-							<ol class="list_news" id="my_notification_list">
-								<!-- 마감일이 가까워지는 순서대로 보여져야 함-->
-								<c:forEach items="${PD_list}" var="pd_list">
-									<li class="item_news type_donation">
-										<div class="card_news">
-											<a href="" class="link"></a>
-											<p class="text_content">${pd_list.getDo_title()} (날짜:
-												${pd_list.getDo_start_date()} ~ ${pd_list.getDo_end_date()})</p>
-											<span class="text_information">${pd_list.getDominator()}</span>
-											<!--진행 상황 표시를 위해  퍼센트 표시 -->
-											<c:set var="gage" value="${pd_list.getDo_total() / pd_list.getDo_goal() *100}" />
-											<!-- gage로 처리하면 99.9647 이런식이라 100%가 적용되지 않기 때문에 gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1))로 반올림 처리한다 -->
-											<c:choose>
-												<c:when test="${gage-(gage%1) >= 100}">
-													<span class="text_information">달성 완료</span>
-												</c:when>
-												<c:otherwise>
-													<span class="text_information">
-													<fmt:parseNumber var="gage1" value="${gage}" integerOnly="true" />
-													<!-- gage의 값을 var=gage1 로 선언한다. gage1의 소숫점을버리고 출력한다. 사용하기위해선 taglib으로 jstl을 선언해야함 -->
-													${gage1}% &nbsp달성</span>
-												</c:otherwise>
-											</c:choose>
-											<button class="button_delete"
-												data-id="61d7a8bc2c5ccf943ae43321">
-												<span class="blind">삭제</span>
-											</button>
-										</div>
-									</li>
-								</c:forEach>
+			<div class="my_recent_news_wrap" id="my_notification">
+				<c:set var="Month_dona" value="${PMD_list}"></c:set>
+				<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
+				<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
+				<h3 class="my_recent_news_title">이달의 기부 현황</h3>
+				<span class="my_recent_news_count">총<span class="number"
+					id="my_notification_count">${fn:length(Month_dona)}</span>건
+				</span>
+				<div class="my_recent_news_feed">
+					<!--전체 보기-->
+					<ol class="list_news" id="my_notification_list">
+						<!-- 마감일이 가까워지는 순서대로 보여져야 함-->
+						<c:forEach items="${PMD_list}" var="pmd_list">
+							<li class="item_news type_donation">
+								<div class="card_news">
+									<a href="" class="link"></a>
+									<p class="text_content">${pmd_list.getVol_title()} (날짜:
+										${pmd_list.getVol_start_date()} ~ ${pmd_list.getVol_end_date()})</p>
+									<span class="text_information">${pmd_list.getVolname()}</span>
+									<!--진행 상황 표시를 위해  퍼센트 표시 -->
+									<c:set var="gage" value="${pmd_list.getVol_total() / pmd_list.getVol_goal() *100}" />
+									<!-- gage로 처리하면 99.9647 이런식이라 100%가 적용되지 않기 때문에 gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1))로 반올림 처리한다 -->
+										<span class="text_information">
+											<fmt:parseNumber var="gage1" value="${gage}" integerOnly="true" />
+											<!-- gage의 값을 var=gage1 로 선언한다. gage1의 소숫점을버리고 출력한다. 사용하기위해선 taglib으로 jstl을 선언해야함 -->
+											${gage1}% &nbsp달성
+										</span>
+										<c:choose>
+											<c:when test="${gage-(gage%1) >= 100}">
+												<span class="text_complete">달성 완료</span>
+											</c:when>
+										</c:choose>
+										<c:choose>
+											<c:when test="${pmd_list.getVol_end_date() eq pmd_list.getVol_site()}">
+												<span class="text_fail">오늘 마감</span>
+											</c:when>
+										</c:choose>
+									<button class="button_delete"
+										data-id="61d7a8bc2c5ccf943ae43321">
+										<span class="blind">삭제</span>
+									</button>
+								</div>
+							</li>
+						</c:forEach>
 
-							</ol>
-						</div>
-						<a href="../홈페이지_기본_레이아웃/manager-donation.html"
-							class="my_recent_news_link">전체보기 <i
-							class="fas fa-chevron-right"></i></a>
+					</ol>
+				</div>
+				<a href="../홈페이지_기본_레이아웃/manager-donation.html"
+					class="my_recent_news_link">전체보기 <i
+					class="fas fa-chevron-right"></i></a>
 
-					</div>
+			</div>
 
             <!-- 달성 완료 기부 -->
-            <div class="my_recent_news_wrap" id="my_notification">
-                <h3 class="my_recent_news_title">목표금액 달성 완료</h3><span class="my_recent_news_count">총<span class="number" id="my_notification_count">42</span>건</span>
-                <div class="my_recent_news_feed"><!--전체 보기-->
-                    <ol class="list_news" id="my_notification_list">
-                        <!-- 마감일이 가까워지는 순서대로 보여져야 함-->
-                        <li class="item_news type_donation">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    사랑으로 기부해 주세요. (날짜: 2022-01-07 ~ 2022-01-12)
-                                </p>
-                                <span class="text_information">젤리빈즈</span>
-                                <span class="text_information">61% 달성</span>
-                                <button class="button_delete" data-id="61d7a8bc2c5ccf943ae43321">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="item_news type_donation">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    훈훈한 열기를 전달해 주세요. (날짜: 2022-01-01~ 2022-01-17)
-                                </p>
-                                <span class="text_information">사랑의 연탄배달</span>
-                                <span class="text_information">목표금액 달성</span>
-                                <button class="button_delete" data-id="61d7a8bc49c1a162a5e711aa">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                        <li class="item_news type_donation">
-                            <div class="card_news">
-                                <a href="https://happybean.naver.com/my/notification" class="link"></a>
-                                <p class="text_content">
-                                    새해엔 학교가 가고 싶어요. (날짜: 2022-01-07 ~ 2022-01-22)
-                                </p>
-                                <span class="text_information">시골 농아협회</span>
-                                <span class="text_information">12% 달성</span>
-                                <button class="button_delete" data-id="61d7a8b94403a833c495ec99">
-                                    <span class="blind">삭제</span>
-                                </button>
-                            </div>
-                        </li>
-                    </ol>
-                </div><a href="../홈페이지_기본_레이아웃/manager-donation-search.html" class="my_recent_news_link">전체보기 <i class="fas fa-chevron-right"></i></a>
-            </div>
+			<div class="my_recent_news_wrap" id="my_notification">
+				<c:set var="Month_dona" value="${CMD_list}"></c:set>
+				<!--게시글의 총 갯수를 표시하기위해  arraylist를 today_dona라는 변수로 선언한다. 그 뒤에 ${fn:length(today_dona)}로 리스트의 크기를 계산한다. fn:length를 사용하기 위해선-->
+				<!--taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"를 위쪽에 써주어야 사용가능하다.-->
+				<h3 class="my_recent_news_title">이달의 목표 달성</h3>
+				<span class="my_recent_news_count">총<span class="number"
+					id="my_notification_count">${fn:length(Month_dona)}</span>건
+				</span>
+				<div class="my_recent_news_feed">
+					<!--전체 보기-->
+					<ol class="list_news" id="my_notification_list">
+						<!-- 마감일이 가까워지는 순서대로 보여져야 함-->
+						<c:forEach items="${CMD_list}" var="cmd_list">
+							<li class="item_news type_donation">
+								<div class="card_news">
+									<a href="" class="link"></a>
+									<p class="text_content">${cmd_list.getVol_title()} (날짜:
+										${cmd_list.getVol_start_date()} ~ ${cmd_list.getVol_end_date()})</p>
+									<span class="text_information">${cmd_list.getVolname()}</span>
+									<!--진행 상황 표시를 위해  퍼센트 표시 -->
+									<c:set var="gage" value="${cmd_list.getVol_total() / cmd_list.getVol_goal() *100}" />
+									<!-- gage로 처리하면 99.9647 이런식이라 100%가 적용되지 않기 때문에 gage+((gage%1>0.5)?(1-(gage%1))%1:-(gage%1))로 반올림 처리한다 -->
+										<span class="text_information">
+											<fmt:parseNumber var="gage1" value="${gage}" integerOnly="true" />
+											<!-- gage의 값을 var=gage1 로 선언한다. gage1의 소숫점을버리고 출력한다. 사용하기위해선 taglib으로 jstl을 선언해야함 -->
+											${gage1}% &nbsp달성
+										</span>
+										<c:choose>
+											<c:when test="${gage-(gage%1) >= 100}">
+												<span class="text_complete">달성 완료</span>
+											</c:when>
+										</c:choose>
+										<c:choose>
+											<c:when test="${cmd_list.getVol_end_date() eq cmd_list.getVol_site()}">
+												<span class="text_fail">오늘 마감</span>
+											</c:when>
+										</c:choose>
+									<button class="button_delete"
+										data-id="61d7a8bc2c5ccf943ae43321">
+										<span class="blind">삭제</span>
+									</button>
+								</div>
+							</li>
+						</c:forEach>
+
+					</ol>
+				</div>
+				<a href="../홈페이지_기본_레이아웃/manager-donation.html"
+					class="my_recent_news_link">전체보기 <i
+					class="fas fa-chevron-right"></i></a>
+
+			</div>
 
         </div><!-- 활동 내용 div-->
 

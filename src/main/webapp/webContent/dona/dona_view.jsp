@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <!--##### // Visual & LNB #####-->
 <%@ include file = "../common_header.jsp" %>
-<link rel="stylesheet" type="text/css" href="css/view.css" />
+<link href="css/sub.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/sub.css" />
 
 <script type="text/javascript">
 
@@ -53,7 +54,18 @@
 	
 	
 </form>
-<div class="contents">
+<!--서브 헤더 -->
+	<div class="sub-header sub-header-give"><!-- sub-header 뒤에 이름 변경으로 이미지 변경 -->
+		<h1 class="sub-title"><span class="text">기 부</span></h1>
+		<span class="deco-box"><i class="deco-1"></i><i class="deco-2"></i></span>
+
+		<div class="sub-menu">
+			<div class="menu-in">
+			</div>
+		</div>
+	</div>
+<!-- 서브 헤더 끝 -->
+
 <div class="tab-3" data-swipe='{"type":"case1","start":".active"}'>
 			<ul>
 				<li data-act='tab' class="item active"><a href="Donation"><span class="in">기부</span></a></li>
@@ -121,7 +133,6 @@
 				</div>
 			</div>
 	<style>
-</div>	
 
 	.viewCont{
 		
@@ -144,9 +155,7 @@
 			</div>
         </div>
     </div>
-	<div class="btn-area">
-				<a href="" class="btn-5">목록으로</a>
-		</div>
+
 <!-- 댓글 기능 구현 안함-->
 
 

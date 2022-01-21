@@ -13,7 +13,121 @@
     <script type="text/javascript" src="css/daterangepicker-master/moment.min.js"></script>
     <script type="text/javascript" src="css/daterangepicker-master/daterangepicker.js"></script>
 
+<script>
+$(function () {
+    $('#calendar_1').daterangepicker({
+        "singleDatePicker": true, /*달력 한개 사용여부 기본은 달력 2개*/
+        "showDropdowns": true, /*년 일 수동으로 선택 가능 여부*/
+        "locale": {
+            "format": "YYYY-MM-DD",
+            "separator": " ~ ",
+            "applyLabel": "확인", /*확인 버튼 이름*/
+            "cancelLabel": "취소", /*취소 버튼 이름*/
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            "firstDay": 1
+        },
+     
+        "startDate": my_page.calendar_1.value, /*달력 시작 일자*/
+        "endDate":  my_page.calendar_1.value,  /*달력 끝나는 일자*/
+        /*"maxDate": "2022/2/22", 달력 최대 값 설정*/
+        /* 달력 옆에 선택 버튼 생성
+        ranges: {
+            '오늘': [moment(), moment()],
+            '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '일주일 전': [moment().subtract(6, 'days'), moment()],
+            '30일 전': [moment().subtract(29, 'days'), moment()],
+            '이번 달': [moment().startOf('month'), moment().endOf('month')],
+            '저번 달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },*/
+        "opens": "left", /*달력 열리는 위치 기본값 right, left, center*/
+        "drops": "auto" /*기본값 달력 아래로 내려옴 "down" 위로 "up"*/
+    }, function (start, end, label) {
+        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+    });
+});
 
+$(function () {
+	
+    $('#calendar_2').daterangepicker({
+        "singleDatePicker": true, /*달력 한개 사용여부 기본은 달력 2개*/
+        "showDropdowns": true, /*년 일 수동으로 선택 가능 여부*/
+        "locale": {
+            "format": "YYYY-MM-DD",
+            "separator": " ~ ",
+            "applyLabel": "확인", /*확인 버튼 이름*/
+            "cancelLabel": "취소", /*취소 버튼 이름*/
+            "fromLabel": "From",
+            "toLabel": "To",
+            "customRangeLabel": "Custom",
+            "weekLabel": "W",
+            "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
+            "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+            "firstDay": 1
+        },
+        "startDate": my_page.calendar_2.value, /*달력 시작 일자*/
+        "endDate": my_page.calendar_2.value,  /*달력 끝나는 일자*/
+        /*"maxDate": "2022/2/22", 달력 최대 값 설정*/
+        /* 달력 옆에 선택 버튼 생성
+        ranges: {
+            '오늘': [moment(), moment()],
+            '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '일주일 전': [moment().subtract(6, 'days'), moment()],
+            '30일 전': [moment().subtract(29, 'days'), moment()],
+            '이번 달': [moment().startOf('month'), moment().endOf('month')],
+            '저번 달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },*/
+        "opens": "right", /*달력 열리는 위치 기본값 right, left, center*/
+        "drops": "auto" /*기본값 달력 아래로 내려옴 "down" 위로 "up"*/
+    }, function (start, end, label) {
+        console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
+    });
+});
+
+	
+	function goSearch(){
+		my_page.t_more.value="0";
+		my_page.method="post";
+		my_page.action="Mypage_activity";
+		my_page.submit();
+	}
+	
+
+	
+	$(document).ready(function(){
+		$("#more_bottun").click(function(){
+		    var urlLocation="Mypage_activity"; 
+		    var more = my_page.t_more.value;
+		    var dayone = my_page.calendar_1.value;
+		    var daytwo = my_page.calendar_2.value;
+		    var id = my_page.t_id.value;
+		    var objDiv = document.getElementById("more_bottun");
+			$.ajax({
+				type : "POST",
+				url : urlLocation,
+				data: {"t_id":id,"calender_1":dayone,"calender_2":daytwo,"t_more":more},
+				dataType : "text",
+				error : function(){
+					alert('통신실패!!');
+				},
+				success : function(data){
+					//alert("통신데이터 값 : " + data);
+					my_page.method="post";
+					my_page.action="Mypage_activity";
+					my_page.submit();
+				}
+				})
+		})
+	});
+
+	
+
+
+</script>
 
     <div id="containar">
         <!--script 밑에 body와 </div> 있음-->
@@ -32,28 +146,27 @@
             </div>
                 <div id="lnb" class="my_lnb" role="menu">
                     <!-- aria-current="#" 여부에 따라 색상 불 들어옴-->
-                    <a href="Mypage_home" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="false">MY홈</a>
-                    <a href="Mypage_news" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">내 소식</a>
-                    <a href="Mypage_activity" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="true">활동내역</a>
-                    <a href="Mypage_regular_payment" role="menuitem" id="my_lnb_item" class="my_lnb_item" aria-current="false">정기결제관리</a>
-                    <a href="Mypage_year" role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">연말정산</a>
+                    <a href="Mypage_home?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="false">MY홈</a>
+                    <a href="Mypage_news?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">내 소식</a>
+                    <a href="Mypage_activity?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="true">활동내역</a>
+                    <a href="Mypage_regular_payment?t_id=${session_id}" role="menuitem" id="my_lnb_item" class="my_lnb_item" aria-current="false">정기결제관리</a>
+                    <a href="Mypage_year?t_id=${session_id}" role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">연말정산</a>
                 </div>
             </div>
 
 
             <!-- 내용 창 -->
             <div role="main" id="content" class="my_content">
-                <h3 class="my_title">활동내역</h3>
-                <form target="_self">
+                <h3 class="my_title">활동내역 </h3>
+                <form name="my_page">
+                	<input type="hidden" name="t_id" value="${session_id}">
                     <fieldset>
                         <legend class="blind">활동내역 필터</legend>
-                        <div style="margin-left:100px;" class="activity_category" aria-hidden="false"> <!-- aria-pressed="true" 면 색 들어옴 -->
-                            <a href="#" role="button"class="activity_category_item" id="all" aria-pressed="true" data-type="all">전체 내역</a> 
-                            <a href="#" role="button" class="activity_category_item" id="donation" aria-pressed="false" data-type="donation">기부 내역</a> 
-                            <a href="#" role="button" class="activity_category_item" id="funding" aria-pressed="false" data-type="funding">펀딩 내역</a> 
-                            <a href="#" role="button" class="activity_category_item" id="deposit" aria-pressed="false" data-type="deposit">참여 내역</a>
+                        <div class="activity_category" aria-hidden="false"> <!-- aria-pressed="true" 면 색 들어옴 -->
+                            <a href="Mypage_activity?t_id=${session_id}" role="button"class="activity_category_item" id="all" aria-pressed="true" data-type="all">전체 내역</a> 
+                            <a href="Mypage_activity_dona?t_id=${session_id}" role="button" class="activity_category_item" id="donation" aria-pressed="false" data-type="donation">기부 내역</a> 
+                            <a href="Mypage_activity_vol?t_id=${session_id}" role="button" class="activity_category_item" id="deposit" aria-pressed="false" data-type="deposit">참여 내역</a>
 
-                            <div class="activity_category_link" data-type="payment"><a href="/my/timeline#type=payment" class="link" id="activity_category_payment">결제내역으로 보기</a></div>
                         </div>
                     </fieldset>
                     <div class="my_npaybanner_wrap"></div>
@@ -61,82 +174,66 @@
                     <!-- 달력 -->
                     <div class="my_activity_calendar_wrap">
                         <div class="activity_calendar_btn_wrap" id="prevCalendar">
-                            <input type="text" id="calendar_1" name="calendar_1" value="" >
+                            <input type="text" id="calendar_1" name="calendar_1" value="${t_day_1}">
                         </div>
                         ~
                         <div class="activity_calendar_btn_wrap" id="prevCalendar">
-                            <input type="text" id="calendar_2" name="calendar_2" value="" >
+                            <input type="text" id="calendar_2" name="calendar_2" value="${t_day_2}">
                         </div>
 
-                        <button type="button" class="activity_calendar_search" id="searchButton">검색</button>
+                        <button type="button" class="activity_calendar_search" onclick="goSearch()" id="searchButton">검색</button>
                     </div>
 
                     
                     <div class="my_recent_activity_wrap" id="myActivityAll" aria-hidden="false">
-                        <h3 class="blind">선택한 내역</h3>
+                        <h3 class="blind">선택한 내역 </h3>
                         <div id="timelineArea">
-                            <div class="my_activity_month"><span class="number">2022.01</span></div>
+                        <c:forEach items="${t_dtos}" var ="dtos" varStatus="StatusNm">
                             <ul class="my_activity_list" id="timeline202201">
-
-                                <!-- [D] 콩소멸 -->
                                 <li class="my_activity_cong timeline_root">
                                     <div class="my_activity_inner">
                                         <div class="my_activity_left">
-                                            <div class="my_activity_cong_cancelled"></div>
+                                            <div>
+                                            	<c:choose> 
+                                            	<c:when test="${fn:substring(dtos.getDona_no(),0,1) eq 'D'}">
+                                            		<div>기부</div>
+                                            	</c:when>
+                                            	<c:when test="${fn:substring(dtos.getDona_no(),0,1) eq 'V'}">
+                                            		<div>후원</div>
+                                            	</c:when>
+                                            	</c:choose>
+                                            </div>
                                         </div>
                                         <div class="my_activity_center">
-                                            <strong class="my_activity_date">2022.01.01</strong>
-                                            <strong class="my_activity_text2">콩소멸</strong>
-                                            <span class="my_activity_title">[2021_3] 지식인 답변채택콩</span>
+                                            <strong class="my_activity_date">${dtos.getDona_date()}</strong>
+                                            <!-- <strong class="my_activity_text2">${dtos.getDona_date()}</strong> -->
+                                            <span class="my_activity_title">${dtos.getDona_title() }</span>
                                         </div>
                                         <div class="my_activity_right">
-                                            <div class="my_activity_price">- <strong class="number">100</strong>원</div>
+                                            <div class="my_activity_price"><strong class="number"><c:if test="${dtos.getDona_amount() >= 5}"> <fmt:formatNumber value="${dtos.getDona_amount()}" pattern="#,###"/> 원</c:if></strong></div>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-
-                            <div class="my_activity_month"><span class="number">2021.09</span></div>
-                            <ul class="my_activity_list" id="timeline202109">
-                                <!-- [D] 콩받음 -->
-                                <li class="my_activity_cong timeline_root">
-                                    <div class="my_activity_inner">
-                                        <div class="my_activity_left">
-                                            <div class="my_activity_cong_success"></div>
-                                        </div>
-                                        <div class="my_activity_center">
-                                            <strong class="my_activity_date">2021.09.23</strong>
-                                            <strong class="my_activity_text2">콩받음</strong>
-                                            <span class="my_activity_title">[2021_3] 지식인 답변채택콩</span>
-                                            <strong class="my_activity_date">2021.12.31 콩소멸 예정</strong>
-                                        </div>
-                                        <div class="my_activity_right">
-                                            <div class="my_activity_price">+ <strong class="number">100</strong>원</div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+						</c:forEach>
                         </div>
                         
                         <!-- 내용이 많은 경우 더보기 버튼 활성화 -->
-                        <button type="button" class="btn_horizontal_more" disabled="disabled">더보기</button>
+                        <c:if test="${t_total_count ne t_dtos.size()}">
+                        <button type="button" class="btn_horizontal_more" id="more_bottun">더보기</button>
+                        </c:if>
+                         <input type="hidden" name="t_more" value="${t_more}">
                     </div>
 
-                    <!-- 검색 결과가 없거나 활동 내용이 없는 경우 띄울 창 display를 block으로 처리한다.-->
-                    <div class="my_recent_activity_wrap" id="defaultNothing">
-                        <div class="none_message">
-                            <p class="none_message_inner">활동내역이 없습니다. <span class="small_text">조회 기간은 최근 1년 기준으로 설정되어
-                                    있습니다.<br>다른 조건을 원하실 경우 검색 기간 설정을 변경해 주세요.</span></p>
-                        </div>
-                    </div>
+                   
+                      <c:if test="${empty t_dtos}">
                     <div class="my_recent_activity_wrap" id="searchNothing">
                         <div class="none_message">
-                            <p class="none_message_inner">검색결과가 없습니다. <span class="small_text">조회 기간 또는 조건을 확인해
+                            <p class="none_message_inner">조회내역이 없습니다. <span class="small_text">조회 기간 또는 조건을 확인해
                                     주세요.</span></p>
                         </div>
                     </div>
-                    <div class="my_activity_notice" style="display: block;">조회 기간은 최근 1년 기준으로 설정되어 있습니다.<br>다른 조건으로 검색을
-                        원하실 경우 검색 기간 설정을 변경해 주세요.</div>
+                     </c:if>
                 </form>
             </div>
 
@@ -171,77 +268,7 @@
                 }
             });
 
-            $(function () {
-            $('#calendar_1').daterangepicker({
-                "singleDatePicker": true, /*달력 한개 사용여부 기본은 달력 2개*/
-                "showDropdowns": true, /*년 일 수동으로 선택 가능 여부*/
-                "locale": {
-                    "format": "YYYY-MM-DD",
-                    "separator": " ~ ",
-                    "applyLabel": "확인", /*확인 버튼 이름*/
-                    "cancelLabel": "취소", /*취소 버튼 이름*/
-                    "fromLabel": "From",
-                    "toLabel": "To",
-                    "customRangeLabel": "Custom",
-                    "weekLabel": "W",
-                    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-                    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-                    "firstDay": 1
-                },
-                "startDate": new Date(), /*달력 시작 일자*/
-                "endDate": new Date(),  /*달력 끝나는 일자*/
-                /*"maxDate": "2022/2/22", 달력 최대 값 설정*/
-                /* 달력 옆에 선택 버튼 생성
-                ranges: {
-                    '오늘': [moment(), moment()],
-                    '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    '일주일 전': [moment().subtract(6, 'days'), moment()],
-                    '30일 전': [moment().subtract(29, 'days'), moment()],
-                    '이번 달': [moment().startOf('month'), moment().endOf('month')],
-                    '저번 달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },*/
-                "opens": "left", /*달력 열리는 위치 기본값 right, left, center*/
-                "drops": "auto" /*기본값 달력 아래로 내려옴 "down" 위로 "up"*/
-            }, function (start, end, label) {
-                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-            });
-        });
-
-        $(function () {
-            $('#calendar_2').daterangepicker({
-                "singleDatePicker": true, /*달력 한개 사용여부 기본은 달력 2개*/
-                "showDropdowns": true, /*년 일 수동으로 선택 가능 여부*/
-                "locale": {
-                    "format": "YYYY-MM-DD",
-                    "separator": " ~ ",
-                    "applyLabel": "확인", /*확인 버튼 이름*/
-                    "cancelLabel": "취소", /*취소 버튼 이름*/
-                    "fromLabel": "From",
-                    "toLabel": "To",
-                    "customRangeLabel": "Custom",
-                    "weekLabel": "W",
-                    "daysOfWeek": ["일", "월", "화", "수", "목", "금", "토"],
-                    "monthNames": ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-                    "firstDay": 1
-                },
-                "startDate": new Date(), /*달력 시작 일자*/
-                "endDate": new Date(),  /*달력 끝나는 일자*/
-                /*"maxDate": "2022/2/22", 달력 최대 값 설정*/
-                /* 달력 옆에 선택 버튼 생성
-                ranges: {
-                    '오늘': [moment(), moment()],
-                    '어제': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                    '일주일 전': [moment().subtract(6, 'days'), moment()],
-                    '30일 전': [moment().subtract(29, 'days'), moment()],
-                    '이번 달': [moment().startOf('month'), moment().endOf('month')],
-                    '저번 달': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-                },*/
-                "opens": "right", /*달력 열리는 위치 기본값 right, left, center*/
-                "drops": "auto" /*기본값 달력 아래로 내려옴 "down" 위로 "up"*/
-            }, function (start, end, label) {
-                console.log('New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')');
-            });
-        });
+    
         </script>
 
     </div>

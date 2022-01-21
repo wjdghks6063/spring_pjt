@@ -29,7 +29,7 @@ public class MemberSave implements Command {
 		String email         = request.getParameter("t_email");
 		String tell         =  request.getParameter("t_tell");
 		System.out.println("tell : " + tell);
-		String reg_date      = CommonUtil.getTodayTime();
+		String reg_date      = CommonUtil.getToday2();
 		String address_1 = request.getParameter("t_address_1");
 		String address_2 = request.getParameter("t_address_2");
 		String info_yn = request.getParameter("t_info_yn");
