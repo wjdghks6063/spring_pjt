@@ -21,19 +21,30 @@
 		goPage.action="Manager";
 		goPage.submit();
 	}
-	
 	function goDona(){
 		goPage.t_gubun.value="Dona";
 		goPage.method="post";
 		goPage.action="Manager";
 		goPage.submit();
 	}
-	function goSearch(search){
-		sear.t_search.value=search;
-		sear.t_gubun.value="Dona";
-		sear.method="post";
-		sear.action="Manager";
-		sear.submit();
+	function goVol(){
+		goPage.t_gubun.value="Vol";
+		goPage.method="post";
+		goPage.action="Manager";
+		goPage.submit();
+	}
+	function goMenu(search){
+		menu.t_search.value=search;
+		menu.t_gubun.value="Dona";
+		menu.method="post";
+		menu.action="Manager";
+		menu.submit();
+	}
+	function goSearch(){
+		goPage.t_gubun.value="Dona_Search";
+		goPage.method="post";
+		goPage.action="Manager";
+		goPage.submit();
 	}
 </script>
 
@@ -53,7 +64,7 @@
             <div id="lnb" class="my_lnb" role="menu">
                 <a href="javascript:goHome()" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="false">MY홈</a> 
                 <a href="javascript:goDona()" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="true">기부</a>
-                <a href="../홈페이지_기본_레이아웃/manager-volunteer.html" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">봉사</a> 
+                <a href="javascript:goVol()" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">봉사</a> 
                 <a href="../홈페이지_기본_레이아웃/manager-Year-end-settlement.html"role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">회원 관리</a>
             </div>
         </div>
@@ -62,19 +73,19 @@
         <div role="main" id="content" class="my_content">
 
             <h3 class="my_title">기부 내역</h3>
-                <form name="sear">
+                <form name="menu">
                 	<input type="hidden" name="t_search">
                 	<input type="hidden" name="t_gubun">
                     <fieldset>
                         <legend class="blind">활동내역 필터</legend>
                         <div class="activity_category" aria-hidden="false"> <!-- aria-pressed="true" 면 색 들어옴 -->
-                            <a href="javascript:goSearch('')" role="button"class="activity_category_item" id="all" <c:if test="${t_search eq ''}">aria-pressed='true'</c:if>>전체 조회</a> 
-                            <a href="javascript:goSearch('senior')" role="button" class="activity_category_item" id="senior"  <c:if test="${t_search eq 'senior'}">aria-pressed='true'</c:if>>노인</a> 
-                            <a href="javascript:goSearch('child')" role="button" class="activity_category_item" id="child" <c:if test="${t_search eq 'child'}">aria-pressed='true'</c:if>>아동</a> 
-                            <a href="javascript:goSearch('disabled')" role="button" class="activity_category_item" id="disabled" <c:if test="${t_search eq 'disabled'}">aria-pressed='true'</c:if>>장애</a>
-                            <a href="javascript:goSearch('disaster')" role="button" class="activity_category_item" id="disaster" <c:if test="${t_search eq 'disaster'}">aria-pressed='true'</c:if>>재난</a>
+                            <a href="javascript:goMenu('')" role="button"class="activity_category_item" id="all" <c:if test="${t_search eq ''}">aria-pressed='true'</c:if>>전체 조회</a> 
+                            <a href="javascript:goMenu('senior')" role="button" class="activity_category_item" id="senior"  <c:if test="${t_search eq 'senior'}">aria-pressed='true'</c:if>>노인</a> 
+                            <a href="javascript:goMenu('child')" role="button" class="activity_category_item" id="child" <c:if test="${t_search eq 'child'}">aria-pressed='true'</c:if>>아동</a> 
+                            <a href="javascript:goMenu('disabled')" role="button" class="activity_category_item" id="disabled" <c:if test="${t_search eq 'disabled'}">aria-pressed='true'</c:if>>장애</a>
+                            <a href="javascript:goMenu('disaster')" role="button" class="activity_category_item" id="disaster" <c:if test="${t_search eq 'disaster'}">aria-pressed='true'</c:if>>재난</a>
                         </div>
-                            <div class="activity_category_link" data-type="payment"><a href="../홈페이지_기본_레이아웃/manager-donation-search.html" class="link" id="activity_category_payment">
+                            <div class="activity_category_link" data-type="payment"><a href="javascript:goSearch()" class="link" id="activity_category_payment">
                             <i class="fas fa-search"></i>&nbsp;&nbsp;상세 검색</a>
                         </div>
                     </fieldset>
@@ -159,7 +170,7 @@
 
 					</ol>
 				</div>
-				<a href="../홈페이지_기본_레이아웃/manager-donation.html"
+				<a href="javascript:goSearch()"
 					class="my_recent_news_link">전체보기 <i
 					class="fas fa-chevron-right"></i></a>
 
@@ -213,7 +224,7 @@
 
 					</ol>
 				</div>
-				<a href="../홈페이지_기본_레이아웃/manager-donation.html"
+				<a href="javascript:goSearch()"
 					class="my_recent_news_link">전체보기 <i
 					class="fas fa-chevron-right"></i></a>
 
@@ -227,75 +238,7 @@
 
         <script>
         
-     // 팝업 열기
-        $(document).on("click", "#btn-share", function (e){
-          var target = $(".share-open");
-          $(target).addClass("show");
-        });
 
-        // 외부영역 클릭 시 팝업 닫기
-        $(document).mouseup(function (e){
-          var LayerPopup = $(".share-open");
-          if(LayerPopup.has(e.target).length === 0){
-            LayerPopup.removeClass("show");
-          }
-        });
-        
-        $(document).ready(function () {
-			$("#all").click(function(){ // #1000btn 버튼을 클릭 하면 작동한다.
-				$("#senior").children("li").css("border", "3px solid #ccc"); //버튼들의 색상을 #ccc로 바꾼다.
-				element.activity_category_item.aria-pressed('senior', true);
-				element.activity_category_item.toggle('senior', true);
-				$("#child").children("li").css("border", "3px solid #ccc");
-				$("#disabled").children("li").css("border", "3px solid #ccc");
-				$("#disaster").children("li").css("border", "3px solid #ccc");
-
-				$(this).css("border", "3px solid red"); //클릭한 버튼의 색상은 빨간테를 두른다.
-				$("#point").val(1000).trigger('change'); //hidden 충전 포인트의  value가 1000으로 바뀐다.
-			});
-			$("#5000btn").click(function() {
-				$("#1000btn").children("li").css("border", "3px solid #ccc");
-				$("#10000btn").children("li").css("border", "3px solid #ccc");
-				$("#50000btn").children("li").css("border", "3px solid #ccc");
-
-				$(this).children("li").css("border", "3px solid red");
-				$("#point").val(5000).trigger('change'); //hidden 충전 포인트의 value가 5000으로 바뀐다.
-			});
-			$("#10000btn").click(function() {
-				$("#5000btn").children("li").css("border", "3px solid #ccc");
-				$("#1000btn").children("li").css("border", "3px solid #ccc");
-				$("#50000btn").children("li").css("border", "3px solid #ccc");
-
-				$(this).children("li").css("border", "3px solid red");
-				$("#point").val(10000).trigger('change'); //hidden 충전 포인트의 value가 10000으로 바뀐다.
-			});
-			$("#50000btn").click(function() {
-				$("#5000btn").children("li").css("border", "3px solid #ccc");
-				$("#1000btn").children("li").css("border", "3px solid #ccc");
-				$("#10000btn").children("li").css("border", "3px solid #ccc");
-
-				$(this).children("li").css("border", "3px solid red");
-				$("#point").val(50000).trigger('change'); //hidden 충전 포인트의 value가 50000으로 바뀐다.
-			});
-
-			
-			$("#point").change(function() { //충전 포인트의 값이 바뀔때 작동한다.
-				$("#charge_point").html(Number($(this).val()).toLocaleString()); //hidden 충전 포인트 값이 span 충전포인트(보여지는 값)의 값으로 자동으로 ,를 찍어서 들어간다. ex) 1000 =  1,000
-				var full_point = Number($("#fix_full_point").val()) + Number($("#point").val()); //var = full_point 를 만들고 안에 포인트 값 fix_full_point에 충전할 금액을 더한다.
-				$("#fully_charged").html(full_point.toLocaleString()); // 충전 후 포인트의 span 값인 #fully_charged 에 자동콤마처리를 해서 넣어준다.(html은 change 와 비슷하다.)
-				$("#full_point").val(full_point).trigger('change'); 
-				// hidden 값인 id= full_point에 value를 var = full_point 값으로 바꿔준다. // var = full_point에 fix_full_point를 full_point로 바꾸면 계속 금액이 더해지지만 hidden으로 원래 값에서 더하기를 처리해서 더하기를 방지함
-			});
-        
-            var kkeys = [],
-                konami = "38,38,40,40,37,39,37,39,66,65";
-            $(document).keydown(function (e) {
-                kkeys.push(e.keyCode);
-                if (kkeys.toString().indexOf(konami) >= 0) {
-                    kkeys = [];
-                    alert('안녕하세요');
-                }
-            });
         </script>
         
         

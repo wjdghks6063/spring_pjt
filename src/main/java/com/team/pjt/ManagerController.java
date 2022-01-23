@@ -30,6 +30,18 @@ public class ManagerController {
 			Command manager = new Manager_donation();
 			manager.execute(request);
 			viewPage="manager/manager_donation";
+			
+		}else if(gubun.equals("Dona_Search")) {
+			//기부 검색
+			Command manager = new Manager_donation();
+			manager.execute(request);
+			viewPage="manager/manager_donation_search";
+			
+		}else if(gubun.equals("Vol")) {
+			//기부 뷰
+			Command manager = new Manager_donation();
+			manager.execute(request);
+			viewPage="manager/manager_volunteer";
 		}
 		
 		return viewPage;

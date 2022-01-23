@@ -47,9 +47,9 @@
 						<div class="my_profile_id" id="maskingIdArea">${session_id}</div>
 					</div>
 					 <div id="lnb" class="my_lnb" role="menu">
-		                <a href="javascript:goHome()" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="true">MY홈</a> 
+		             	<a href="javascript:goHome()" role="menuitem" class="my_lnb_item" id="lnb_my_home" aria-current="true">MY홈</a> 
 		                <a href="javascript:goDona()" role="menuitem" class="my_lnb_item" id="lnb_my_notification" aria-current="false">기부</a>
-		                <a href="../홈페이지_기본_레이아웃/manager-volunteer.html" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">봉사</a> 
+		                <a href="javascript:goVol()" role="menuitem" class="my_lnb_item" id="lnb_my_activity" aria-current="false">봉사</a> 
 		                <a href="../홈페이지_기본_레이아웃/manager-Year-end-settlement.html"role="menuitem" class="my_lnb_item" id="lnb_my_tax" aria-current="false">회원 관리</a>
 		            </div>
 				</div>
